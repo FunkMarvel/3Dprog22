@@ -1,9 +1,7 @@
 #ifndef RENDERWINDOW_H
 #define RENDERWINDOW_H
 
-#include "cube.h"
-#include "xyz.h"
-
+#include "visualobject.h"
 #include <QWindow>
 #include <QOpenGLFunctions_4_1_Core>
 #include <QTimer>
@@ -35,19 +33,22 @@ private slots:
 
 private:
     void init();            //initialize things we need before rendering
-    XYZ xyz{};
-    Cube cube{};
+
+    std::vector<VisualObject*> mObjects;
 
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context
     bool mInitialized{false};
 
     Shader *mShaderProgram{nullptr};    //holds pointer the GLSL shader program
-    GLint  mMatrixUniform;              //OpenGL reference to the Uniform in the shader program
+    GLint  mPmatrixUniform;
+    GLint  mVmatrixUniform;
+    GLint  mMatrixUniform;             //OpenGL reference to the Uniform in the shader program
 
     GLuint mVAO;                        //OpenGL reference to our VAO
     GLuint mVBO;                        //OpenGL reference to our VBO
 
-    QMatrix4x4 *mMVPmatrix{nullptr};         //The matrix with the transform for the object we draw
+    QMatrix4x4 *mVmatrix{nullptr};         //The matrix with the transform for the object we draw
+    QMatrix4x4 *mPmatrix{nullptr};         //The matrix with the transform for the object we draw
 
     QTimer *mRenderTimer{nullptr};           //timer that drives the gameloop
     QElapsedTimer mTimeStart;               //time variable that reads the calculated FPS

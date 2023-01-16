@@ -13,6 +13,9 @@
 #include "shader.h"
 #include "mainwindow.h"
 #include "logger.h"
+#include "xyz.h"
+#include "cube.h"
+#include "trianglesurface.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     : mContext(nullptr), mInitialized(false), mMainWindow(mainWindow)
@@ -33,15 +36,24 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 
     //This is the matrix used to transform (rotate) the triangle
     //You could do without, but then you have to simplify the shader and shader setup
-    mMVPmatrix = new QMatrix4x4{};
-    mMVPmatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
+    mVmatrix = new QMatrix4x4{};
+    mVmatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
+    mPmatrix = new QMatrix4x4{};
+    mPmatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
 
     //Make the gameloop timer:
     mRenderTimer = new QTimer(this);
+
+    mObjects.push_back(new XYZ{});
+    mObjects.push_back(new TriangleSurface{});
 }
 
 RenderWindow::~RenderWindow()
 {
+    for (VisualObject* object : mObjects) {
+        delete object;
+    }
+
     //cleans up the GPU memory
     glDeleteVertexArrays( 1, &mVAO );
     glDeleteBuffers( 1, &mVBO );
@@ -111,8 +123,10 @@ void RenderWindow::init()
     mMatrixUniform = glGetUniformLocation( mShaderProgram->getProgram(), "matrix" );
 
     glBindVertexArray(0);       //unbinds any VertexArray - good practice
-    xyz.init(mMatrixUniform);
-    cube.init(mMatrixUniform);
+
+    for (VisualObject* object : mObjects) {
+        object->init(mMatrixUniform);
+    }
 }
 
 // Called each frame - doing the rendering!!!
@@ -129,9 +143,9 @@ void RenderWindow::render()
     //what shader to use
     glUseProgram(mShaderProgram->getProgram() );
 
-    xyz.draw();
-    cube.draw();
-    cube.rotate(*mMVPmatrix);
+    for (VisualObject* object : mObjects) {
+        object->draw();
+    }
 
     //Calculate framerate before
     // checkForGLerrors() because that call takes a long time
@@ -148,8 +162,8 @@ void RenderWindow::render()
 
     //just to make the triangle rotate - tweak this:
     //                   degree, x,   y,   z -axis
-    if(mRotate)
-        mMVPmatrix->rotate(2.f, 0.1f, 1.1, 0.3f);
+//    if(mRotate)
+//        mMVPmatrix->rotate(2.f, 0.1f, 1.1, 0.3f);
 }
 
 //This function is called from Qt when window is exposed (shown)
