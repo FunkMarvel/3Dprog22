@@ -14,7 +14,6 @@
 #include "mainwindow.h"
 #include "logger.h"
 #include "xyz.h"
-#include "cube.h"
 #include "trianglesurface.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
@@ -36,10 +35,10 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 
     //This is the matrix used to transform (rotate) the triangle
     //You could do without, but then you have to simplify the shader and shader setup
-    mVmatrix = new QMatrix4x4{};
-    mVmatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
-    mPmatrix = new QMatrix4x4{};
-    mPmatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
+    mVMatrix = new QMatrix4x4{};
+    mVMatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
+    mPMatrix = new QMatrix4x4{};
+    mPMatrix->setToIdentity();    //1, 1, 1, 1 in the diagonal of the matrix
 
     //Make the gameloop timer:
     mRenderTimer = new QTimer(this);
@@ -121,6 +120,8 @@ void RenderWindow::init()
     //********************** Making the object to be drawn **********************
 
     mMatrixUniform = glGetUniformLocation( mShaderProgram->getProgram(), "matrix" );
+    mPMatrixUniform = glGetUniformLocation( mShaderProgram->getProgram(), "pmatrix" );
+    mVMatrixUniform = glGetUniformLocation( mShaderProgram->getProgram(), "vmatrix" );
 
     glBindVertexArray(0);       //unbinds any VertexArray - good practice
 
@@ -142,6 +143,17 @@ void RenderWindow::render()
 
     //what shader to use
     glUseProgram(mShaderProgram->getProgram() );
+
+    mPMatrix->setToIdentity();
+    mVMatrix->setToIdentity();
+    mPMatrix->perspective(60, 4.0/3.0, 0.1, 10.0);
+
+    qDebug() << *mPMatrix;
+    // Flytter kamera
+    mVMatrix->translate(0, 0, -5);
+    // Flere matriser her! Skal legges i kameraklasse
+    glUniformMatrix4fv( mPMatrixUniform, 1, GL_FALSE, mPMatrix->constData());
+    glUniformMatrix4fv( mVMatrixUniform, 1, GL_FALSE, mVMatrix->constData());
 
     for (VisualObject* object : mObjects) {
         object->draw();

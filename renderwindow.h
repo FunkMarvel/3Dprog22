@@ -40,15 +40,15 @@ private:
     bool mInitialized{false};
 
     Shader *mShaderProgram{nullptr};    //holds pointer the GLSL shader program
-    GLint  mPmatrixUniform;
-    GLint  mVmatrixUniform;
+    GLint  mPMatrixUniform;
+    GLint  mVMatrixUniform;
     GLint  mMatrixUniform;             //OpenGL reference to the Uniform in the shader program
 
     GLuint mVAO;                        //OpenGL reference to our VAO
     GLuint mVBO;                        //OpenGL reference to our VBO
 
-    QMatrix4x4 *mVmatrix{nullptr};         //The matrix with the transform for the object we draw
-    QMatrix4x4 *mPmatrix{nullptr};         //The matrix with the transform for the object we draw
+    QMatrix4x4 *mVMatrix{nullptr};         //The matrix with the transform for the object we draw
+    QMatrix4x4 *mPMatrix{nullptr};         //The matrix with the transform for the object we draw
 
     QTimer *mRenderTimer{nullptr};           //timer that drives the gameloop
     QElapsedTimer mTimeStart;               //time variable that reads the calculated FPS
