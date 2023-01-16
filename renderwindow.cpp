@@ -15,6 +15,7 @@
 #include "logger.h"
 #include "xyz.h"
 #include "trianglesurface.h"
+#include "interactiveobject.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     : mContext(nullptr), mInitialized(false), mMainWindow(mainWindow)
@@ -44,7 +45,9 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     mRenderTimer = new QTimer(this);
 
     mObjects.push_back(new XYZ{});
-    mObjects.push_back(new TriangleSurface{});
+//    mObjects.push_back(new TriangleSurface{});
+    mObjects.push_back(new InteractiveObject{});
+
 }
 
 RenderWindow::~RenderWindow()
@@ -142,7 +145,7 @@ void RenderWindow::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //what shader to use
-    glUseProgram(mShaderProgram->getProgram() );
+    glUseProgram(mShaderProgram->getProgram());
 
     mPMatrix->setToIdentity();
     mVMatrix->setToIdentity();
@@ -298,6 +301,26 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape)
     {
         mMainWindow->close();       //Shuts down the whole program
+    }
+
+    if (event->key() == Qt::Key_D) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(1,0,0);
+    }
+
+    if (event->key() == Qt::Key_A) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(-1,0,0);
+    }
+
+    if (event->key() == Qt::Key_W) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(0,1,0);
+    }
+
+    if (event->key() == Qt::Key_S) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(0,-1,0);
     }
 
     //You get the keyboard input like this
