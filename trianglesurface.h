@@ -13,8 +13,6 @@ public:
 
     void init(GLint shader) override;
     void draw() override;
-
-    void construct();
 };
 
 #endif // TRIANGLESURFACE_H

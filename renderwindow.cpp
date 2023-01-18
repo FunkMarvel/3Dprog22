@@ -8,6 +8,7 @@
 #include <QStatusBar>
 #include <QDebug>
 
+#include <QDir>
 #include <string>
 
 #include "shader.h"
@@ -46,7 +47,9 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 
     mObjects.push_back(new XYZ{});
 //    mObjects.push_back(new TriangleSurface{});
-    mObjects.push_back(new InteractiveObject{});
+    QString path = QDir().cleanPath(QDir().absoluteFilePath("../vertices.dat"));
+    qDebug() << path;
+    mObjects.push_back(new TriangleSurface{path.toStdString()});
 
 }
 
@@ -151,7 +154,7 @@ void RenderWindow::render()
     mVMatrix->setToIdentity();
     mPMatrix->perspective(60, 4.0/3.0, 0.1, 10.0);
 
-    qDebug() << *mPMatrix;
+//    qDebug() << *mPMatrix;
     // Flytter kamera
     mVMatrix->translate(0, 0, -5);
     // Flere matriser her! Skal legges i kameraklasse
@@ -303,25 +306,25 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
         mMainWindow->close();       //Shuts down the whole program
     }
 
-    if (event->key() == Qt::Key_D) {
-        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
-        intOb->move(1,0,0);
-    }
+//    if (event->key() == Qt::Key_D) {
+//        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+//        intOb->move(1,0,0);
+//    }
 
-    if (event->key() == Qt::Key_A) {
-        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
-        intOb->move(-1,0,0);
-    }
+//    if (event->key() == Qt::Key_A) {
+//        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+//        intOb->move(-1,0,0);
+//    }
 
-    if (event->key() == Qt::Key_W) {
-        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
-        intOb->move(0,1,0);
-    }
+//    if (event->key() == Qt::Key_W) {
+//        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+//        intOb->move(0,1,0);
+//    }
 
-    if (event->key() == Qt::Key_S) {
-        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
-        intOb->move(0,-1,0);
-    }
+//    if (event->key() == Qt::Key_S) {
+//        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+//        intOb->move(0,-1,0);
+//    }
 
     //You get the keyboard input like this
 //    if(event->key() == Qt::Key_A)
