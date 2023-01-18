@@ -80,23 +80,5 @@ void TriangleSurface::draw()
     glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
 }
 
-void TriangleSurface::construct()
-{
-  float xmin=0.0f, xmax=1.0f, ymin=0.0f, ymax=1.0f, h=0.25f;
-  for (auto x=xmin; x<xmax; x+=h)
-      for (auto y=ymin; y<ymax; y+=h)
-      {
-          float z = sin(M_PI*x)*sin(M_PI*y);
-          mVertices.push_back(Vertex{x,y,z,x,y,z});
-          z = sin(M_PI*(x+h))*sin(M_PI*y);
-          mVertices.push_back(Vertex{x+h,y,z,x,y,z});
-          z = sin(M_PI*x)*sin(M_PI*(y+h));
-          mVertices.push_back(Vertex{x,y+h,z,x,y,z});
-          mVertices.push_back(Vertex{x,y+h,z,x,y,z});
-          z = sin(M_PI*(x+h))*sin(M_PI*y);
-          mVertices.push_back(Vertex{x+h,y,z,x,y,z});
-          z = sin(M_PI*(x+h))*sin(M_PI*(y+h));
-          mVertices.push_back(Vertex{x+h,y+h,z,x,y,z});
-      }
-}
+
 
