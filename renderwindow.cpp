@@ -16,7 +16,7 @@
 #include "logger.h"
 #include "xyz.h"
 #include "trianglesurface.h"
-#include "interactiveobject.h"
+#include "curve.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     : mContext(nullptr), mInitialized(false), mMainWindow(mainWindow)
@@ -47,9 +47,10 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 
     mObjects.push_back(new XYZ{});
 //    mObjects.push_back(new TriangleSurface{});
-    QString path = QDir().cleanPath(QDir().absoluteFilePath("../vertices.dat"));
+    QString path = QDir().cleanPath(QDir().absoluteFilePath("../curve.dat"));
     qDebug() << path;
-    mObjects.push_back(new TriangleSurface{path.toStdString()});
+//    mObjects.push_back(new TriangleSurface{path.toStdString()});
+    mObjects.push_back(new Curve{path.toStdString()});
 
 }
 
@@ -132,6 +133,9 @@ void RenderWindow::init()
     for (VisualObject* object : mObjects) {
         object->init(mMatrixUniform);
     }
+//    mObjects[1]->mMatrix.rotate(-45.f, 0.0f, 1.0f, 0.0f);
+//    mObjects[1]->mMatrix.rotate(-65.f, 1.0f, 0.0f, 0.0f);
+
 }
 
 // Called each frame - doing the rendering!!!
@@ -150,11 +154,11 @@ void RenderWindow::render()
 
     mPMatrix->setToIdentity();
     mVMatrix->setToIdentity();
-    mPMatrix->perspective(60, 4.0/3.0, 0.1, 10.0);
+    mPMatrix->perspective(60, 4.0/3.0, 0.1, 50.0);
 
 //    qDebug() << *mPMatrix;
     // Flytter kamera
-    mVMatrix->translate(0, 0, -5);
+    mVMatrix->translate(0, 0, -15);
     // Flere matriser her! Skal legges i kameraklasse
     glUniformMatrix4fv( mPMatrixUniform, 1, GL_FALSE, mPMatrix->constData());
     glUniformMatrix4fv( mVMatrixUniform, 1, GL_FALSE, mVMatrix->constData());

@@ -20,6 +20,8 @@ protected:
     GLuint mVAO{0};
     GLuint mVBO{0};
     GLint mMatrixUniform{0};
+
+public:
     QMatrix4x4 mMatrix;
 };
 

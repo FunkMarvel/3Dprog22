@@ -11,8 +11,8 @@ public:
     ~TriangleSurface() override;
     void readFile(std::string filnavn);
 
-    void init(GLint shader) override;
-    void draw() override;
+    virtual void init(GLint shader) override;
+    virtual void draw() override;
 };
 
 #endif // TRIANGLESURFACE_H
