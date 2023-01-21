@@ -19,7 +19,7 @@ TriangleSurface::~TriangleSurface() {
 
 }
 
-TriangleSurface::TriangleSurface(std::string filnavn) : VisualObject()
+TriangleSurface::TriangleSurface(std::string filnavn)
 {
    readFile(filnavn);
    mMatrix.setToIdentity();

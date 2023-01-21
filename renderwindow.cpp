@@ -55,9 +55,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 
 RenderWindow::~RenderWindow()
 {
-    for (VisualObject* object : mObjects) {
-        delete object;
-    }
+    mObjects.clear();
 
     //cleans up the GPU memory
     glDeleteVertexArrays( 1, &mVAO );
