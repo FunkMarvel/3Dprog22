@@ -47,9 +47,11 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 
     mObjects.push_back(new XYZ{});
 //    mObjects.push_back(new TriangleSurface{});
-    QString path = QDir().cleanPath(QDir().absoluteFilePath("../curve.dat"));
+    QString path = QDir().cleanPath(QDir().absoluteFilePath("../lissajous.dat"));
     qDebug() << path;
 //    mObjects.push_back(new TriangleSurface{path.toStdString()});
+//    auto surf = reinterpret_cast<TriangleSurface*>(mObjects[1]);
+//    surf->drawUnitNormals(true);
     mObjects.push_back(new Curve{path.toStdString()});
 
 }
@@ -133,8 +135,8 @@ void RenderWindow::init()
     for (VisualObject* object : mObjects) {
         object->init(mMatrixUniform);
     }
-//    mObjects[1]->mMatrix.rotate(-45.f, 0.0f, 1.0f, 0.0f);
-//    mObjects[1]->mMatrix.rotate(-65.f, 1.0f, 0.0f, 0.0f);
+//    mObjects[1]->rotate(-45.f, 0.0f, 1.0f, 0.0f);
+//    mObjects[1]->rotate(-65.f, 1.0f, 0.0f, 0.0f);
 
 }
 
@@ -158,7 +160,7 @@ void RenderWindow::render()
 
 //    qDebug() << *mPMatrix;
     // Flytter kamera
-    mVMatrix->translate(0, 0, -15);
+    mVMatrix->translate(0, 0, -2);
     // Flere matriser her! Skal legges i kameraklasse
     glUniformMatrix4fv( mPMatrixUniform, 1, GL_FALSE, mPMatrix->constData());
     glUniformMatrix4fv( mVMatrixUniform, 1, GL_FALSE, mVMatrix->constData());

@@ -9,6 +9,7 @@ public:
     Curve();
     Curve(std::string file);
 
+
     virtual void init(GLint shader) override;
     virtual void draw() override;
 };

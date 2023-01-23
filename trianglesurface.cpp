@@ -16,7 +16,7 @@ TriangleSurface::TriangleSurface()
 }
 
 TriangleSurface::~TriangleSurface() {
-
+    mNormals.clear();
 }
 
 TriangleSurface::TriangleSurface(std::string filnavn)
@@ -38,9 +38,15 @@ void TriangleSurface::readFile(std::string filnavn) {
        for (int i=0; i<n; i++) {
            inn >> vertex;
            mVertices.push_back(vertex);
-           qDebug() << mVertices[i][0] << ", " << mVertices[i][1] << ", " << mVertices[i][2] << ", " << mVertices[i][3] << ", " << mVertices[i][4] << ", " << mVertices[i][5];
+//           qDebug() << mVertices[i][0] << ", " << mVertices[i][1] << ", " << mVertices[i][2] << ", " << mVertices[i][3] << ", " << mVertices[i][4] << ", " << mVertices[i][5];
        }
        inn.close();
+
+       // create vector of normals to draw.
+       for (size_t i = 0; i < mVertices.size(); i+=2) {
+           mNormals.push_back(new LineSegment{mVertices[i][0], mVertices[i][1], mVertices[i][2],
+                                          mVertices[i][0]+mVertices[i][3], mVertices[i][1]+mVertices[i][4], mVertices[i][2]+mVertices[i][5]});
+       }
    } else {
        qDebug() << "file not open\n";
    }
@@ -75,13 +81,32 @@ void TriangleSurface::init(GLint matrixUniform)
     // mMatrixUniform = glGetUniformLocation( matrixUniform, "matrix" );
 
     glBindVertexArray(0);
+
+    for (size_t i = 0; i < mNormals.size(); ++i) {
+        mNormals[i]->init(matrixUniform);
+    }
 }
 
 void TriangleSurface::draw()
 {
     glBindVertexArray( mVAO );
     glUniformMatrix4fv( mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
+
     glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
+
+    if (!bDrawUnitNormals) return;
+
+    for (size_t i = 0; i < mNormals.size(); ++i) {
+        mNormals[i]->draw();
+    }
+}
+
+void TriangleSurface::rotate(float deg, float x, float y, float z)
+{
+    mMatrix.rotate(deg, x, y, z);
+    for (size_t i = 0; i < mNormals.size(); ++i) {
+        mNormals[i]->rotate(deg, x, y, z);
+    }
 }
 
 

@@ -10,6 +10,7 @@ SOURCES += main.cpp \
     cube.cpp \
     curve.cpp \
     interactiveobject.cpp \
+    linesegment.cpp \
     logger.cpp \
     mainwindow.cpp \
     renderwindow.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     cube.h \
     curve.h \
     interactiveobject.h \
+    linesegment.h \
     logger.h \
     mainwindow.h \
     renderwindow.h \

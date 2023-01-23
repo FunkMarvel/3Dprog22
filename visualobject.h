@@ -23,6 +23,7 @@ protected:
 
 public:
     QMatrix4x4 mMatrix;
+    virtual void rotate(float deg, float x, float y, float z);
 };
 
 #endif // VISUALOBJECT_H

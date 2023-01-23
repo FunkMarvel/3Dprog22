@@ -1,21 +1,33 @@
-#include "curve.h"
+#include "linesegment.h"
+#include <initializer_list>
 
-
-Curve::Curve()
+LineSegment::LineSegment()
 {
 
 }
 
-Curve::Curve(std::string file)
+LineSegment::~LineSegment()
 {
-    mVertices.clear();
-    readFile(file);
-    mMatrix.setToIdentity();
+
 }
 
-void Curve::init(GLint matrixUniform)
+LineSegment::LineSegment(std::initializer_list<float> vals)
 {
-    this->mMatrixUniform = matrixUniform;
+    auto it = vals.begin();
+
+    if(vals.size() > 6) throw std::range_error("Too many values for line");
+
+    mVertices.push_back(Vertex{*it, *(++it), *(++it), 1, 0, 0});
+    mVertices.push_back(Vertex{*(++it), *(++it), *(++it), 0, 1, 0});
+
+//    qDebug() << "(" << mVertices[0][0] << "," << mVertices[0][1] << "," << mVertices[0][2] << ")" << "\n";
+//    qDebug() << "(" << mVertices[1][0] << "," << mVertices[1][0] << "," << mVertices[1][2] << ")" << "\n";
+//    qDebug() << "(" << mVertices[1][0]-mVertices[0][0] << "," << mVertices[1][1]-mVertices[0][1] << "," << mVertices[1][2]-mVertices[0][2] << ")" << "\n";
+}
+
+void LineSegment::init(GLint shader)
+{
+    mMatrixUniform = shader;
 
     initializeOpenGLFunctions();
 
@@ -44,9 +56,10 @@ void Curve::init(GLint matrixUniform)
     glBindVertexArray(0);
 }
 
-void Curve::draw()
+void LineSegment::draw()
 {
     glBindVertexArray( mVAO );
     glUniformMatrix4fv( mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
-    glDrawArrays(GL_LINE_STRIP, 0, mVertices.size());
+
+    glDrawArrays(GL_LINES, 0, mVertices.size());
 }
