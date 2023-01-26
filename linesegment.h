@@ -7,7 +7,7 @@ class LineSegment : public VisualObject
 {
 public:
     LineSegment();
-    ~LineSegment();
+    ~LineSegment() override;
     LineSegment(class std::initializer_list<float> vals);
 
     virtual void init(GLint shader) override;
