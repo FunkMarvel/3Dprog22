@@ -46,6 +46,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     mRenderTimer = new QTimer(this);
 
     mObjects.push_back(new XYZ{});
+    
 //    mObjects.push_back(new TriangleSurface{});
     QString path = QDir().cleanPath(QDir().absoluteFilePath("../vertices.dat"));
     qDebug() << path;
@@ -130,7 +131,7 @@ void RenderWindow::init()
     mPMatrixUniform = glGetUniformLocation( mShaderProgram->getProgram(), "pmatrix" );
     mVMatrixUniform = glGetUniformLocation( mShaderProgram->getProgram(), "vmatrix" );
 
-    glBindVertexArray(0);       //unbinds any VertexArray - good practice
+    _camera.init(mPMatrixUniform, mVMatrixUniform);
 
     for (VisualObject* object : mObjects) {
         object->init(mMatrixUniform);
@@ -138,6 +139,7 @@ void RenderWindow::init()
     mObjects[1]->rotate(-45.f, 0.0f, 1.0f, 0.0f);
     mObjects[1]->rotate(-65.f, 1.0f, 0.0f, 0.0f);
 
+    glBindVertexArray(0);       //unbinds any VertexArray - good practice
 }
 
 // Called each frame - doing the rendering!!!
@@ -154,16 +156,15 @@ void RenderWindow::render()
     //what shader to use
     glUseProgram(mShaderProgram->getProgram());
 
-    mPMatrix->setToIdentity();
-    mVMatrix->setToIdentity();
-    mPMatrix->perspective(60, 4.0/3.0, 0.1, 50.0);
+    _camera.init(mPMatrixUniform, mVMatrixUniform);
+    _camera.perspective(60, 4.0/3.0, 0.1, 50.0);
 
 //    qDebug() << *mPMatrix;
     // Flytter kamera
-    mVMatrix->translate(0, 0, -12);
+    _camera.lookAt(QVector3D{0,0,-15}, QVector3D{0,0,0}, QVector3D{0,1,0});
+
     // Flere matriser her! Skal legges i kameraklasse
-    glUniformMatrix4fv( mPMatrixUniform, 1, GL_FALSE, mPMatrix->constData());
-    glUniformMatrix4fv( mVMatrixUniform, 1, GL_FALSE, mVMatrix->constData());
+	_camera.update();
 
     for (VisualObject* object : mObjects) {
         object->draw();
