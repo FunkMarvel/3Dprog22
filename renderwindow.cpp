@@ -17,6 +17,7 @@
 #include "xyz.h"
 #include "trianglesurface.h"
 #include "curve.h"
+#include "tetrahedron.h"
 
 RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     : mContext(nullptr), mInitialized(false), mMainWindow(mainWindow)
@@ -49,10 +50,11 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 //    mObjects.push_back(new TriangleSurface{});
     QString path = QDir().cleanPath(QDir().absoluteFilePath("../vertices.dat"));
     qDebug() << path;
-    mObjects.push_back(new TriangleSurface{path.toStdString()});
+    //mObjects.push_back(new TriangleSurface{path.toStdString()});
 //    auto surf = reinterpret_cast<TriangleSurface*>(mObjects[1]);
 //    surf->drawUnitNormals(true);
 //    mObjects.push_back(new Curve{path.toStdString()});
+    mObjects.push_back(new Tetrahedron{});
 
 }
 
@@ -135,8 +137,8 @@ void RenderWindow::init()
     for (VisualObject* object : mObjects) {
         object->init(mMatrixUniform);
     }
-    mObjects[1]->rotate(-45.f, 0.0f, 1.0f, 0.0f);
-    mObjects[1]->rotate(-65.f, 1.0f, 0.0f, 0.0f);
+    /*mObjects[1]->rotate(-45.f, 0.0f, 1.0f, 0.0f);
+    mObjects[1]->rotate(-65.f, 1.0f, 0.0f, 0.0f);*/
 
 }
 
