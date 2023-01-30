@@ -89,6 +89,9 @@
     <ClCompile Include="xyz.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tetrahedron.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -130,19 +133,17 @@
     <ClInclude Include="xyz.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tetrahedron.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    
-    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
-    
-    
-    
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwindow.ui">
