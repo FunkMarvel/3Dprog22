@@ -13,7 +13,8 @@ private:
    GLint  _mVMatrixUniform;        //OpenGL reference to the Uniform in the shader program
    QVector3D _mEye;
    QMatrix4x4 _mPMatrix{};         // denne,
-   QMatrix4x4 mVMatrix{};         // og denne, skal legges inn i kameraklasse
+   QMatrix4x4 _mVMatrix{};         // og denne, skal legges inn i kameraklasse
+
 public:
    Camera();
    ~Camera() override = default;

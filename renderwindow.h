@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <QElapsedTimer>
 
+#include "camera.h"
+
 class QOpenGLContext;
 class Shader;
 class MainWindow;
@@ -35,6 +37,7 @@ private:
     void init();            //initialize things we need before rendering
 
     std::vector<VisualObject*> mObjects;
+    Camera _camera{};
 
     QOpenGLContext *mContext{nullptr};  //Our OpenGL context
     bool mInitialized{false};
