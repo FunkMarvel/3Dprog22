@@ -51,10 +51,10 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 //    mObjects.push_back(new TriangleSurface{});
     QString path = QDir().cleanPath(QDir().absoluteFilePath("../vertices.dat"));
     qDebug() << path;
-    //mObjects.push_back(new TriangleSurface{path.toStdString()});
-//    auto surf = reinterpret_cast<TriangleSurface*>(mObjects[1]);
-//    surf->drawUnitNormals(true);
-//    mObjects.push_back(new Curve{path.toStdString()});
+    mObjects.push_back(new TriangleSurface{path.toStdString()});
+    auto surf = reinterpret_cast<TriangleSurface*>(mObjects[1]);
+    surf->drawUnitNormals(true);
+    mObjects.push_back(new Curve{path.toStdString()});
     mObjects.push_back(new Tetrahedron{});
 
 }
@@ -134,6 +134,7 @@ void RenderWindow::init()
     mVMatrixUniform = glGetUniformLocation( mShaderProgram->getProgram(), "vmatrix" );
 
     _camera.init(mPMatrixUniform, mVMatrixUniform);
+    //_camera.translate(5, -5, 0);
 
     for (VisualObject* object : mObjects) {
         object->init(mMatrixUniform);
@@ -163,7 +164,7 @@ void RenderWindow::render()
 
 //    qDebug() << *mPMatrix;
     // Flytter kamera
-    _camera.lookAt(QVector3D{0,0,-15}, QVector3D{0,0,0}, QVector3D{0,1,0});
+    _camera.lookAt(QVector3D{0,0,5}, QVector3D{0,0,0}, QVector3D{0,1,0});
 
     // Flere matriser her! Skal legges i kameraklasse
 	_camera.update();
@@ -313,25 +314,35 @@ void RenderWindow::keyPressEvent(QKeyEvent *event)
         mMainWindow->close();       //Shuts down the whole program
     }
 
-//    if (event->key() == Qt::Key_D) {
-//        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
-//        intOb->move(1,0,0);
-//    }
+    if (event->key() == Qt::Key_D) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(1,0,0);
+    }
 
-//    if (event->key() == Qt::Key_A) {
-//        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
-//        intOb->move(-1,0,0);
-//    }
+    if (event->key() == Qt::Key_A) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(-1,0,0);
+    }
 
-//    if (event->key() == Qt::Key_W) {
-//        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
-//        intOb->move(0,1,0);
-//    }
+    if (event->key() == Qt::Key_W) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(0,1,0);
+    }
 
-//    if (event->key() == Qt::Key_S) {
-//        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
-//        intOb->move(0,-1,0);
-//    }
+    if (event->key() == Qt::Key_S) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(0,-1,0);
+    }
+
+    if (event->key() == Qt::Key_Q) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(0,0,1);
+    }
+
+    if (event->key() == Qt::Key_E) {
+        InteractiveObject* intOb = reinterpret_cast<InteractiveObject*>(mObjects[1]);
+        intOb->move(0,0,-1);
+    }
 
     //You get the keyboard input like this
 //    if(event->key() == Qt::Key_A)
