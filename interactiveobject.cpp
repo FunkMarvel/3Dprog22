@@ -1,68 +1,66 @@
 #include "interactiveobject.h"
 
-InteractiveObject::InteractiveObject()
+InteractiveObject::InteractiveObject(): mx(0), my(0), mz(0)
 {
-    // ABCD
-    mVertices.push_back(Vertex{0.5,0.5,-0.5,1,1,1});
-    mVertices.push_back(Vertex{0.5,-0.5,-0.5,1,1,1});
-    mVertices.push_back(Vertex{-0.5,-0.5,-0.5,1,1,1});
+	//// ABCD
+	//mVertices.push_back(Vertex{0.5, 0.5, -0.5, 1, 1, 1});
+	//mVertices.push_back(Vertex{0.5, -0.5, -0.5, 1, 1, 1});
+	//mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 1, 1, 1});
 
-    mVertices.push_back(Vertex{-0.5,-0.5,-0.5,1,1,1});
-    mVertices.push_back(Vertex{-0.5,0.5,-0.5,1,1,1});
-    mVertices.push_back(Vertex{0.5,0.5,-0.5,1,1,1});
+	//mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 1, 1, 1});
+	//mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 1, 1, 1});
+	//mVertices.push_back(Vertex{0.5, 0.5, -0.5, 1, 1, 1});
 
-    // CBFG
-    mVertices.push_back(Vertex{0.5,-0.5,-0.5,0.5373,0.0706,0.0784});
-    mVertices.push_back(Vertex{0.5,0.5,-0.5,0.5373,0.0706,0.0784});
-    mVertices.push_back(Vertex{0.5,0.5,0.5,0.5373,0.0706,0.0784});
+	//// CBFG
+	//mVertices.push_back(Vertex{0.5, -0.5, -0.5, 0.5373, 0.0706, 0.0784});
+	//mVertices.push_back(Vertex{0.5, 0.5, -0.5, 0.5373, 0.0706, 0.0784});
+	//mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.5373, 0.0706, 0.0784});
 
-    mVertices.push_back(Vertex{0.5,-0.5,-0.5,0.5373,0.0706,0.0784});
-    mVertices.push_back(Vertex{0.5,0.5,0.5,0.5373,0.0706,0.0784});
-    mVertices.push_back(Vertex{0.5,-0.5,0.5,0.5373,0.0706,0.0784});
+	//mVertices.push_back(Vertex{0.5, -0.5, -0.5, 0.5373, 0.0706, 0.0784});
+	//mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.5373, 0.0706, 0.0784});
+	//mVertices.push_back(Vertex{0.5, -0.5, 0.5, 0.5373, 0.0706, 0.0784});
 
-    // DCGH
-    mVertices.push_back(Vertex{-0.5,0.5,-0.5,0.0510,0.2824,0.6745});
-    mVertices.push_back(Vertex{0.5,0.5,-0.5,0.0510,0.2824,0.6745});
-    mVertices.push_back(Vertex{0.5,0.5,0.5,0.0510,0.2824,0.6745});
+	//// DCGH
+	//mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 0.0510, 0.2824, 0.6745});
+	//mVertices.push_back(Vertex{0.5, 0.5, -0.5, 0.0510, 0.2824, 0.6745});
+	//mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.0510, 0.2824, 0.6745});
 
-    mVertices.push_back(Vertex{-0.5,0.5,-0.5,0.0510,0.2824,0.6745});
-    mVertices.push_back(Vertex{0.5,0.5,0.5,0.0510,0.2824,0.6745});
-    mVertices.push_back(Vertex{-0.5,0.5,0.5,0.0510,0.2824,0.6745});
+	//mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 0.0510, 0.2824, 0.6745});
+	//mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.0510, 0.2824, 0.6745});
+	//mVertices.push_back(Vertex{-0.5, 0.5, 0.5, 0.0510, 0.2824, 0.6745});
 
-    // DAHE
-    mVertices.push_back(Vertex{-0.5,0.5,-0.5,1,0.3333,0.1451});
-    mVertices.push_back(Vertex{-0.5,-0.5,-0.5,1,0.3333,0.1451});
-    mVertices.push_back(Vertex{-0.5,-0.5,0.5,1,0.3333,0.1451});
+	//// DAHE
+	//mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 1, 0.3333, 0.1451});
+	//mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 1, 0.3333, 0.1451});
+	//mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 1, 0.3333, 0.1451});
 
-    mVertices.push_back(Vertex{-0.5,0.5,-0.5,1,0.3333,0.1451});
-    mVertices.push_back(Vertex{-0.5,-0.5,0.5,1,0.3333,0.1451});
-    mVertices.push_back(Vertex{-0.5,0.5,0.5,1,0.3333,0.1451});
+	//mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 1, 0.3333, 0.1451});
+	//mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 1, 0.3333, 0.1451});
+	//mVertices.push_back(Vertex{-0.5, 0.5, 0.5, 1, 0.3333, 0.1451});
 
-    // ABFE
-    mVertices.push_back(Vertex{-0.5,-0.5,-0.5,0.0980,0.6078,0.2980});
-    mVertices.push_back(Vertex{0.5,-0.5,-0.5,0.0980,0.6078,0.2980});
-    mVertices.push_back(Vertex{0.5,-0.5,0.5,0.0980,0.6078,0.2980});
+	//// ABFE
+	//mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 0.0980, 0.6078, 0.2980});
+	//mVertices.push_back(Vertex{0.5, -0.5, -0.5, 0.0980, 0.6078, 0.2980});
+	//mVertices.push_back(Vertex{0.5, -0.5, 0.5, 0.0980, 0.6078, 0.2980});
 
-    mVertices.push_back(Vertex{-0.5,-0.5,-0.5,0.0980,0.6078,0.2980});
-    mVertices.push_back(Vertex{0.5,-0.5,0.5,0.0980,0.6078,0.2980});
-    mVertices.push_back(Vertex{-0.5,-0.5,0.5,0.0980,0.6078,0.2980});
+	//mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 0.0980, 0.6078, 0.2980});
+	//mVertices.push_back(Vertex{0.5, -0.5, 0.5, 0.0980, 0.6078, 0.2980});
+	//mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 0.0980, 0.6078, 0.2980});
 
-    // EFGH
-    mVertices.push_back(Vertex{-0.5,-0.5,0.5,0.9961,0.8353,0.1843});
-    mVertices.push_back(Vertex{0.5,-0.5,0.5,0.9961,0.8353,0.1843});
-    mVertices.push_back(Vertex{0.5,0.5,0.5,0.9961,0.8353,0.1843});
+	//// EFGH
+	//mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 0.9961, 0.8353, 0.1843});
+	//mVertices.push_back(Vertex{0.5, -0.5, 0.5, 0.9961, 0.8353, 0.1843});
+	//mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.9961, 0.8353, 0.1843});
 
-    mVertices.push_back(Vertex{-0.5,-0.5,0.5,0.9961,0.8353,0.1843});
-    mVertices.push_back(Vertex{0.5,0.5,0.5,0.9961,0.8353,0.1843});
-    mVertices.push_back(Vertex{-0.5,0.5,0.5,0.9961,0.8353,0.1843});
+	//mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 0.9961, 0.8353, 0.1843});
+	//mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.9961, 0.8353, 0.1843});
+	//mVertices.push_back(Vertex{-0.5, 0.5, 0.5, 0.9961, 0.8353, 0.1843});
 
-    mMatrix.setToIdentity();
+	mMatrix.setToIdentity();
 }
 
 InteractiveObject::~InteractiveObject()
-{
-
-}
+= default;
 
 void InteractiveObject::init(GLint matrixUniform)
 {
