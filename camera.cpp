@@ -1,6 +1,6 @@
 #include "camera.h"
 
-Camera::Camera() : _mEye{0,0,-5}
+Camera::Camera() : _mEye{0,0,5}
 {
 	_mPMatrix.setToIdentity();
 	_mVMatrix.setToIdentity();
@@ -33,5 +33,5 @@ void Camera::update()
 
 void Camera::translate(float dx, float dy, float dz)
 {
-
+	_mEye + QVector3D{dx,dy,dz};
 }
