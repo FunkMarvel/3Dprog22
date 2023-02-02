@@ -51,10 +51,10 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
 //    mObjects.push_back(new TriangleSurface{});
     QString path = QDir().cleanPath(QDir().absoluteFilePath("../vertices.dat"));
     qDebug() << path;
-    mObjects.push_back(new TriangleSurface{path.toStdString()});
+    /*mObjects.push_back(new TriangleSurface{path.toStdString()});
     auto surf = reinterpret_cast<TriangleSurface*>(mObjects[1]);
     surf->drawUnitNormals(true);
-    mObjects.push_back(new Curve{path.toStdString()});
+    mObjects.push_back(new Curve{path.toStdString()});*/
     mObjects.push_back(new Tetrahedron{});
 
 }

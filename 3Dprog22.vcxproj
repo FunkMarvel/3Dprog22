@@ -200,6 +200,7 @@
     <ClCompile Include="logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="octahedronball.cpp" />
     <ClCompile Include="renderwindow.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="tetrahedron.cpp" />
@@ -219,6 +220,7 @@
     </QtMoc>
     <QtMoc Include="renderwindow.h">
     </QtMoc>
+    <ClInclude Include="octahedronball.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="tetrahedron.h" />
     <ClInclude Include="trianglesurface.h" />
