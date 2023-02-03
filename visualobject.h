@@ -20,9 +20,17 @@ protected:
     GLuint mVAO{0};
     GLuint mVBO{0};
     GLint mMatrixUniform{0};
+    QMatrix4x4 mMatrix;
+    
+    // Velger å lagre posisjon, rotasjon og translasjon
+    // i hver sin 4x4 matrise
+    QMatrix4x4 mPosition;
+    QMatrix4x4 mRotation;
+    QMatrix4x4 mScale;
+    // Legger til rette for simulering
+    QVector3D mVelocity;
 
 public:
-    QMatrix4x4 mMatrix;
     virtual void rotate(float deg, float x, float y, float z);
 };
 

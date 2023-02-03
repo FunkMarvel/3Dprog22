@@ -17,9 +17,10 @@
 #include "xyz.h"
 #include "trianglesurface.h"
 #include "curve.h"
+#include "octahedronball.h"
 #include "tetrahedron.h"
 
-RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
+RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)  // NOLINT(cppcoreguidelines-pro-type-member-init)
     : mContext(nullptr), mInitialized(false), mMainWindow(mainWindow)
 
 {
@@ -56,6 +57,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow)
     surf->drawUnitNormals(true);
     mObjects.push_back(new Curve{path.toStdString()});*/
     mObjects.push_back(new Tetrahedron{});
+    mObjects.push_back(new OctahedronBall{4});
 
 }
 
