@@ -190,8 +190,9 @@ void RenderWindow::render()
 
     //just to make the triangle rotate - tweak this:
     //                   degree, x,   y,   z -axis
-//    if(mRotate)
-//        mMVPmatrix->rotate(2.f, 0.1f, 1.1, 0.3f);
+    if(mRotate)
+        for (const auto& object : mObjects)
+	        object->rotate(2.f, 0.1f, 1.1, 0.3f);
 }
 
 //This function is called from Qt when window is exposed (shown)
