@@ -13,8 +13,10 @@ SOURCES += main.cpp \
     linesegment.cpp \
     logger.cpp \
     mainwindow.cpp \
+    octahedronball.cpp \
     renderwindow.cpp \
     shader.cpp \
+    tetrahedron.cpp \
     trianglesurface.cpp \
     vertex.cpp \
     visualobject.cpp \
@@ -28,8 +30,10 @@ HEADERS += \
     linesegment.h \
     logger.h \
     mainwindow.h \
+    octahedronball.h \
     renderwindow.h \
     shader.h \
+    tetrahedron.h \
     trianglesurface.h \
     vertex.h \
     visualobject.h \
