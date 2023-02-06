@@ -57,9 +57,9 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
 
     mObjects.push_back(new XYZ());
-    mObjects.push_back(new Curve{"../3Dprog22/Curve.txt"});
+    mObjects.push_back(new Curve{"../Curve.dat"});
 
-    mObjects.push_back(new TriangleSurface{"../3Dprog22/vertices.dat"});
+    mObjects.push_back(new TriangleSurface{"../vertices.dat"});
 
     mObjects.push_back(new Cube());
 }
@@ -147,6 +147,8 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 */
     for (auto it = mObjects.begin(); it != mObjects.end(); it++)
         (*it)->init(mMmatrixUniform);
+
+    mObjects[0]->move(-8, -7, 0);
     glBindVertexArray(0); //unbinds any VertexArray - good practice
 }
 
@@ -184,13 +186,10 @@ void RenderWindow::render() {
     //ree
 
     if (XYZ_render) {
-        auto obj = mObjects[0];
-
-        MoveByInput(obj);
-        RotateByInput(obj);
-
-        obj->draw();
+       mObjects[0]->draw();
     }
+    RotateByInput(mObjects[0]);
+
     if (Curve_render) {
         auto obj = mObjects[1];
 
