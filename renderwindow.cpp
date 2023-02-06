@@ -13,6 +13,7 @@
 #include <QDir>
 
 
+#include "disc.h"
 #include "xyz.h"
 #include "cube.h"
 #include "shader.h"
@@ -62,6 +63,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
     mObjects.push_back(new TriangleSurface{"../vertices.dat"});
 
     mObjects.push_back(new Cube());
+    mObjects.push_back(new Disc{true});
 }
 
 RenderWindow::~RenderWindow() {
@@ -174,8 +176,8 @@ void RenderWindow::render() {
     glUseProgram(mShaderProgram->getProgram());
 
     //Moveing camera
-    mCamera.translate(0, 0, 15);
-    mCamera.lookAt(QVector3D{0, 0, 15}, QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
+    mCamera.translate(0, 0, 10);
+    mCamera.lookAt(QVector3D{0, 0, 10}, QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
     mCamera.update();
 
 
@@ -215,11 +217,9 @@ void RenderWindow::render() {
         obj->draw();
     }
 
-    /*
-     if (XYZ_render == true){
-        XYZ().draw();
-     }
-    */
+    mObjects[4]->move(1.0f/mRenderTimer->interval());
+    mObjects[4]->draw();
+
     mMVPmatrix->setToIdentity();
 
     //Calculate framerate before

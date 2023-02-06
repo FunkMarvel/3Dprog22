@@ -20,8 +20,10 @@ public:
     void init(GLint pMatrixUniform, GLint vMatrixUniform);
     void perspective(int degrees, double aspect, double nearPlane, double farPlane);
     void lookAt(const QVector3D& eye, const QVector3D& at, const QVector3D& up);
+    void lookAt(const QVector3D& at, const QVector3D& up);
     void update();
     void translate(float dx, float dy, float dz);
+    QVector3D eyePos() const {return _mEye; }
 };
 
 #endif // CAMERA_H

@@ -6,7 +6,7 @@
 class Disc : public VisualObject
 {
 public:
-   Disc();
+   Disc(bool bConstruct = false);
    Disc(std::string filnavn);
    ~Disc() override;
    void readFile(std::string filnavn);

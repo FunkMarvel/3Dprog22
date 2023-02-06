@@ -1,8 +1,8 @@
 #include "disc.h"
 
-Disc::Disc()
+Disc::Disc(bool bConstruct)
 {
-
+    if(bConstruct) construct();
 }
 
 Disc::~Disc()
@@ -90,5 +90,11 @@ void Disc::move(float dt)
 {
     float degrees = (180 * dt) / M_PI;
     mRotation.rotate(degrees, 0, 0, 1);
-    mMatrix = mRotation;
+    mMatrix.rotate(degrees, 0, 0, 1);
+
+    float tanSpeed = (M_PI/180.0f) * degrees * mRadius;
+    QVector4D tanVel{-tanSpeed, 0, 0, 1};
+    tanVel = mRotation.inverted()*tanVel;
+
+    VisualObject::move(tanVel.x(), tanVel.y(), tanVel.z());
 }
