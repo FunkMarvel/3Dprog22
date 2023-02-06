@@ -60,7 +60,7 @@ void MainWindow::init() {
     //layout that is made in the .ui-file
     // (Qt has a QOpenGLWidget but that forces us to use more Qt specific OpenGL-stuff
     //  So we make a renderwindow manually to get more freedom)
-    mRenderWindowContainer = QWidget::createWindowContainer(mRenderWindow);
+    mRenderWindowContainer = createWindowContainer(mRenderWindow);
     //OpenGLLayout is made in the mainwindow.ui-file!
     ui->OpenGLLayout->addWidget(mRenderWindowContainer);
 
@@ -69,7 +69,7 @@ void MainWindow::init() {
     mRenderWindowContainer->setFocus();
 
     //feed in MainWindow to the logger - have to be done, else logger will crash program
-    Logger::getInstance()->setMainWindow(this);;
+    Logger::getInstance()->setMainWindow(this);
 }
 
 //Example of a slot called from the button on the top of the program.

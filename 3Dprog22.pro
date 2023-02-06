@@ -9,6 +9,7 @@ SOURCES += main.cpp \
     camera.cpp \
     cube.cpp \
     curve.cpp \
+    disc.cpp \
     linesegment.cpp \
     logger.cpp \
     mainwindow.cpp \
@@ -25,6 +26,7 @@ HEADERS += \
     camera.h \
     cube.h \
     curve.h \
+    disc.h \
     linesegment.h \
     logger.h \
     mainwindow.h \

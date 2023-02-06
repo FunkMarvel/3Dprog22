@@ -3,16 +3,14 @@
 
 #include "visualobject.h"
 
-class LineSegment : public VisualObject
-{
+class LineSegment : public VisualObject {
 public:
     LineSegment();
     ~LineSegment() override;
     LineSegment(class std::initializer_list<float> vals);
 
-    virtual void init(GLint shader) override;
-    virtual void draw() override;
-
+    void init(GLint shader) override;
+    void draw() override;
 };
 
 #endif // LINESEGMENT_H

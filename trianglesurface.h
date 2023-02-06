@@ -10,8 +10,8 @@ public:
     ~TriangleSurface() override;
     void readFile(std::string filnavn);
 
-    virtual void init(GLint shader) override;
-    virtual void draw() override;
+    void init(GLint shader) override;
+    void draw() override;
 
     void move(float dx, float dy, float dz) override;
     void Rotate(float deg, float x, float y, float z) override;

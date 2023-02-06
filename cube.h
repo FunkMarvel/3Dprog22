@@ -3,8 +3,7 @@
 
 #include "visualobject.h"
 
-class Cube : public VisualObject
-{
+class Cube : public VisualObject {
 public:
     Cube();
 

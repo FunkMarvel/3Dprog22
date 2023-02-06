@@ -3,8 +3,7 @@
 
 #include "visualobject.h"
 
-class XYZ : public VisualObject
-{
+class XYZ : public VisualObject {
 public:
     XYZ();
     ~XYZ() override;

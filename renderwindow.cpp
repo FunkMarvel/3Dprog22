@@ -26,7 +26,7 @@
 RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
     : mContext(nullptr), mInitialized(false), mMainWindow(mainWindow) {
     //This is sent to QWindow:
-    setSurfaceType(QWindow::OpenGLSurface);
+    setSurfaceType(OpenGLSurface);
     setFormat(format);
     //Make the OpenGL context
     mContext = new QOpenGLContext(this);
@@ -145,7 +145,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     (*it)->init(mVmatrixUniform);
 */
-    for (auto it = mObjects.begin(); it != mObjects.end(); it++)
+    for (auto it = mObjects.begin(); it != mObjects.end(); ++it)
         (*it)->init(mMmatrixUniform);
 
     mObjects[0]->move(-8, -7, 0);
@@ -186,7 +186,7 @@ void RenderWindow::render() {
     //ree
 
     if (XYZ_render) {
-       mObjects[0]->draw();
+        mObjects[0]->draw();
     }
     RotateByInput(mObjects[0]);
 

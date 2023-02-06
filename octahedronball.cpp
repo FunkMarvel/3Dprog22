@@ -12,15 +12,19 @@ void OctahedronBall::makeTriangle(const QVector3D& v1, const QVector3D& v2, cons
 }
 
 void OctahedronBall::subDivide(const QVector3D& a, const QVector3D& b, const QVector3D& c, int n) {
-    if (n>0) {
-        QVector3D v1 = a+b; v1.normalize();
-        QVector3D v2 = a+c; v2.normalize();
-        QVector3D v3 = c+b; v3.normalize();
-        subDivide(a, v1, v2, n-1);
-        subDivide(c, v2, v3, n-1);
-        subDivide(b, v3, v1, n-1);
-        subDivide(v3, v2, v1, n-1);
-    } else {
+    if (n > 0) {
+        QVector3D v1 = a + b;
+        v1.normalize();
+        QVector3D v2 = a + c;
+        v2.normalize();
+        QVector3D v3 = c + b;
+        v3.normalize();
+        subDivide(a, v1, v2, n - 1);
+        subDivide(c, v2, v3, n - 1);
+        subDivide(b, v3, v1, n - 1);
+        subDivide(v3, v2, v1, n - 1);
+    }
+    else {
         makeTriangle(a, b, c);
     }
 }
@@ -57,24 +61,25 @@ void OctahedronBall::init(GLint matrixUniform) {
 
 
     //Vertex Array Object - VAO
-    glGenVertexArrays( 1, &mVAO );
-    glBindVertexArray( mVAO );
+    glGenVertexArrays(1, &mVAO);
+    glBindVertexArray(mVAO);
 
 
     //Vertex Buffer Object to hold vertices - VBO
-    glGenBuffers( 1, &mVBO );
-    glBindBuffer( GL_ARRAY_BUFFER, mVBO );
+    glGenBuffers(1, &mVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 
 
-    glBufferData( GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(mVertices.size()*sizeof(Vertex)), mVertices.data(), GL_STATIC_DRAW );
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(mVertices.size() * sizeof(Vertex)), mVertices.data(), GL_STATIC_DRAW);
 
 
     glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT,GL_FALSE,sizeof(Vertex), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT,GL_FALSE, sizeof(Vertex), nullptr);
     glEnableVertexAttribArray(0);
 
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,  sizeof(Vertex), reinterpret_cast<const GLvoid*>(3 * sizeof(GLfloat)));  // NOLINT(performance-no-int-to-ptr)
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<const GLvoid*>(3 * sizeof(GLfloat)));
+    // NOLINT(performance-no-int-to-ptr)
     glEnableVertexAttribArray(1);
 
 
@@ -82,7 +87,7 @@ void OctahedronBall::init(GLint matrixUniform) {
 }
 
 void OctahedronBall::draw() {
-    glBindVertexArray( mVAO );
-    glUniformMatrix4fv( mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
-    glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(mVertices.size()));//mVertices.size());
+    glBindVertexArray(mVAO);
+    glUniformMatrix4fv(mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
+    glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(mVertices.size())); //mVertices.size());
 }

@@ -9,11 +9,14 @@
 class VisualObject : public QOpenGLFunctions_4_1_Core {
 public:
     VisualObject();
-    ~VisualObject();
+    ~VisualObject() override;
     virtual void init(GLint matrixUniform) =0;
     virtual void draw() =0;
     virtual void move(float x, float y, float z); // pure virtual
     //Test function
+    virtual void move(float dt) {
+    }
+
     virtual void Rotate(float l, float r, float u, float d);
 
     virtual QVector3D position() const {
@@ -28,5 +31,6 @@ protected:
     QMatrix4x4 mMatrix;
 
     QVector4D mPosition{0, 0, 0, 1};
+    QMatrix4x4 mRotation;
 };
 #endif // VISUALOBJECT_H

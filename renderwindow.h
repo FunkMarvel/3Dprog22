@@ -41,8 +41,7 @@ public:
     bool drawNormals{false};
 
 private
-    slots:
-    
+slots:
     void render(); //the actual render - function
 
 private:

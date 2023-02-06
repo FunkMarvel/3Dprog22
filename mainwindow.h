@@ -16,11 +16,11 @@ class MainWindow : public QMainWindow {
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
 private slots:
     ///Slot called from the button in the mainwindow.ui file
-    
+
     void on_rotationButton_toggled(bool checked);
     ///Slot called from the File->Exit menu in the mainwindow.ui file
     void on_fileExit_triggered();

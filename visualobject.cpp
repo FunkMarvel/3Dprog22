@@ -2,6 +2,7 @@
 #include "visualobject.h"
 
 VisualObject::VisualObject() {
+    mRotation.setToIdentity();
 }
 
 VisualObject::~VisualObject() {
@@ -15,5 +16,6 @@ void VisualObject::move(float dx, float dy, float dz) {
 }
 
 void VisualObject::Rotate(float dl, float dr, float du, float dd) {
+    mRotation.rotate(dl, dr, du, dd);
     mMatrix.rotate(dl, dr, du, dd);
 }
