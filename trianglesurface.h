@@ -1,11 +1,9 @@
 #ifndef TRIANGLESURFACE_H
 #define TRIANGLESURFACE_H
 
-#include "linesegment.h"
 #include "visualobject.h"
 
-class TriangleSurface : public VisualObject
-{
+class TriangleSurface : public VisualObject {
 public:
     TriangleSurface();
     TriangleSurface(std::string filnavn);
@@ -15,11 +13,12 @@ public:
     virtual void init(GLint shader) override;
     virtual void draw() override;
 
-    virtual void rotate(float deg, float x, float y, float z) override;
+    void move(float dx, float dy, float dz) override;
+    void Rotate(float deg, float x, float y, float z) override;
 
 private:
     bool bDrawUnitNormals{false};
-    std::vector<LineSegment*> mNormals{};
+    std::vector<class LineSegment*> mNormals{};
 
 public:
     void drawUnitNormals(bool on) {

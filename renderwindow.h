@@ -1,13 +1,16 @@
 #ifndef RENDERWINDOW_H
 #define RENDERWINDOW_H
 
-#include "visualobject.h"
 #include <QWindow>
 #include <QOpenGLFunctions_4_1_Core>
 #include <QTimer>
 #include <QElapsedTimer>
+#include <vector>
 
+#include "visualobject.h"
 #include "camera.h"
+
+#include "octahedronball.h"
 
 class QOpenGLContext;
 class Shader;
@@ -17,54 +20,68 @@ class MainWindow;
 // OpenGL surface.
 // We also inherit from QOpenGLFunctions, to get access to the OpenGL functions
 // This is the same as using "glad" and "glw" from general OpenGL tutorials
-class RenderWindow : public QWindow, protected QOpenGLFunctions_4_1_Core
-{
+class RenderWindow : public QWindow, protected QOpenGLFunctions_4_1_Core {
     Q_OBJECT
+
 public:
-    RenderWindow(const QSurfaceFormat &format, MainWindow *mainWindow);
+    RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow);
     ~RenderWindow() override;
 
-    QOpenGLContext *context() { return mContext; }
+    QOpenGLContext* context() {
+        return mContext;
+    }
 
-    void exposeEvent(QExposeEvent *) override;  //gets called when app is shown and resized
+    void exposeEvent(QExposeEvent*) override; //gets called when app is shown and resized
 
-    bool mRotate{false};     //Check if triangle should rotate
+    bool mRotate{true}; //Check if triangle should rotate
+    bool XYZ_render{false};
+    bool Curve_render{false};
+    bool Plane_render{false};
+    bool Cube_render{false};
+    bool drawNormals{false};
 
-private slots:
-    void render();          //the actual render - function
+private
+    slots:
+    
+    void render(); //the actual render - function
 
 private:
-    void init();            //initialize things we need before rendering
-
+    //Vertex m_v;
+    std::map<int, bool> pressedKeys{};
     std::vector<VisualObject*> mObjects;
-    Camera _camera{};
+    VisualObject* mia;
+    Camera mCamera{};
+    void init(); //initialize things we need before rendering
 
-    QOpenGLContext *mContext{nullptr};  //Our OpenGL context
+    QOpenGLContext* mContext{nullptr}; //Our OpenGL context
     bool mInitialized{false};
 
-    Shader *mShaderProgram{nullptr};    //holds pointer the GLSL shader program
-    GLint  mPMatrixUniform;
-    GLint  mVMatrixUniform;
-    GLint  mMatrixUniform;             //OpenGL reference to the Uniform in the shader program
+    Shader* mShaderProgram{nullptr}; //holds pointer the GLSL shader program
 
-    GLuint mVAO;                        //OpenGL reference to our VAO
-    GLuint mVBO;                        //OpenGL reference to our VBO
+    GLint mPmatrixUniform; //OPenGL reference to the uniform in the shader program
+    GLint mVmatrixUniform;
+    GLint mMmatrixUniform;
 
-    QMatrix4x4 *mVMatrix{nullptr};         //The matrix with the transform for the object we draw
-    QMatrix4x4 *mPMatrix{nullptr};         //The matrix with the transform for the object we draw
+    GLuint mVAO; //OpenGL reference to our VAO
+    GLuint mVBO; //OpenGL reference to our VBO
 
-    QTimer *mRenderTimer{nullptr};           //timer that drives the gameloop
-    QElapsedTimer mTimeStart;               //time variable that reads the calculated FPS
 
-    MainWindow *mMainWindow{nullptr};        //points back to MainWindow to be able to put info in StatusBar
+    QMatrix4x4* mMVPmatrix{nullptr}; //The matrix with the transform for the object we draw
+    QMatrix4x4* mPmatrix{nullptr};
+    QMatrix4x4* mVmatrix{nullptr};
 
-    class QOpenGLDebugLogger *mOpenGLDebugLogger{nullptr};  //helper class to get some clean debug info from OpenGL
-    class Logger *mLogger{nullptr};         //logger - Output Log in the application
+    QTimer* mRenderTimer{nullptr}; //timer that drives the gameloop
+    QElapsedTimer mTimeStart;      //time variable that reads the calculated FPS
+
+    MainWindow* mMainWindow{nullptr}; //points back to MainWindow to be able to put info in StatusBar
+
+    class QOpenGLDebugLogger* mOpenGLDebugLogger{nullptr}; //helper class to get some clean debug info from OpenGL
+    class Logger* mLogger{nullptr};                        //logger - Output Log in the application
 
     ///Helper function that uses QOpenGLDebugLogger or plain glGetError()
     void checkForGLerrors();
 
-    void calculateFramerate();          //as name says
+    void calculateFramerate(); //as name says
 
     ///Starts QOpenGLDebugLogger if possible
     void startOpenGLDebugger();
@@ -77,9 +94,13 @@ protected:
     //
     //    void mousePressEvent(QMouseEvent *event) override{}
     //    void mouseMoveEvent(QMouseEvent *event) override{}
-    void keyPressEvent(QKeyEvent *event) override;              //the only one we use now
-    //    void keyReleaseEvent(QKeyEvent *event) override{}
+    void keyPressEvent(QKeyEvent* event) override; //the only one we use now
+    void keyReleaseEvent(QKeyEvent* event) override;
     //    void wheelEvent(QWheelEvent *event) override{}
+
+    void MoveByInput(VisualObject*);
+    void RotateByInput(VisualObject*);
+    void InitMoveKeys();
 };
 
 #endif // RENDERWINDOW_H
