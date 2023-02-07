@@ -45,6 +45,7 @@ slots:
     void render(); //the actual render - function
 
 private:
+    float dt{-10000};
     //Vertex m_v;
     std::map<int, bool> pressedKeys{};
     std::vector<VisualObject*> mObjects;

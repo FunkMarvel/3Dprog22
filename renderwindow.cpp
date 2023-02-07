@@ -152,6 +152,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 
     mObjects[0]->move(-8, -7, 0);
     glBindVertexArray(0); //unbinds any VertexArray - good practice
+
 }
 
 // Called each frame - doing the rendering!!!
@@ -165,6 +166,7 @@ void RenderWindow::render() {
     mCamera.perspective(60, 4.0 / 3.0, 0.1, 20.0);
 
     mTimeStart.restart();        //restart FPS clock
+    if (dt < -9999) dt = 1.0f/mRenderTimer->interval();
     mContext->makeCurrent(this); //must be called every frame (every time mContext->swapBuffers is called)
 
     initializeOpenGLFunctions(); //must call this every frame it seems...
@@ -217,7 +219,11 @@ void RenderWindow::render() {
         obj->draw();
     }
 
-    mObjects[4]->move(1.0f/mRenderTimer->interval());
+    float sign{-1.0f};
+
+    if (mObjects[4]->position().length() >= 5) dt *= sign;
+
+    if(mRotate) mObjects[4]->move(dt);
     mObjects[4]->draw();
 
     mMVPmatrix->setToIdentity();
@@ -373,12 +379,12 @@ void RenderWindow::keyReleaseEvent(QKeyEvent* event) {
 void RenderWindow::MoveByInput(VisualObject* obj) {
     QVector3D movVec{};
 
-    QVector3D right{-1, 0, 0};
-    QVector3D up{0, -1, 0};
-    QVector3D out{0, 0, -1};
+    QVector3D right{1, 0, 0};
+    QVector3D up{0, 1, 0};
+    QVector3D out{0, 0, 1};
 
     for (auto key : pressedKeys) {
-        if (key.second) continue;
+        if (!key.second) continue;
 
         switch (key.first) {
         case Qt::Key_Right:

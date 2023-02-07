@@ -75,8 +75,8 @@ void Disc::construct()
     {
         double angle = 30 * i * M_PI / 180;
         qDebug() << "angle = " << angle;
-        float x = cos(angle);
-        float y = sin(angle);
+        float x = mRadius*cos(angle);
+        float y = mRadius*sin(angle);
         float z = 0.0f;
         float r = i%2;
         float g = 0.f;
@@ -88,13 +88,14 @@ void Disc::construct()
 
 void Disc::move(float dt)
 {
-    float degrees = (180 * dt) / M_PI;
-    mRotation.rotate(degrees, 0, 0, 1);
-    mMatrix.rotate(degrees, 0, 0, 1);
-
-    float tanSpeed = (M_PI/180.0f) * degrees * mRadius;
-    QVector4D tanVel{-tanSpeed, 0, 0, 1};
+    float tanSpeed = dt * mRadius;
+    QVector4D tanVel{-1, 0, 0, 1};
     tanVel = mRotation.inverted()*tanVel;
+    tanVel *= tanSpeed;
 
     VisualObject::move(tanVel.x(), tanVel.y(), tanVel.z());
+
+    float degrees = (180.0f * dt) / M_PI;
+    mRotation.rotate(degrees, 0, 0, 1);
+    mMatrix.rotate(degrees, 0, 0, 1);
 }
