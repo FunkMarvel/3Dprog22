@@ -3,24 +3,24 @@
 
 #include "visualobject.h"
 
-class Disc : public VisualObject
-{
+class Disc : public VisualObject {
 public:
-   Disc(bool bConstruct = false);
-   Disc(std::string filnavn);
-   ~Disc() override;
-   void readFile(std::string filnavn);
-   void writeFile(std::string filnavn);
-   void init(GLint matrixUniform) override;
-   void draw() override;
-   void construct();
-   void move(float dt) override;
+    Disc(bool bConstruct = false);
+    Disc(std::string filnavn);
+    ~Disc() override;
+    void readFile(std::string filnavn);
+    void writeFile(std::string filnavn);
+    void init(GLint matrixUniform) override;
+    void draw() override;
+    void construct();
+    void move(float dt) override;
+
 protected:
-   std::vector<GLuint> mIndices;   	// Til indeksering
-   GLuint mIBO{0};                 		// for glDrawElements()
+    std::vector<GLuint> mIndices; // Til indeksering
+    GLuint mIBO{0};               // for glDrawElements()
 
 
-   float mRadius{0.5};			//
+    float mRadius{0.5}; //
 };
 
 #endif // DISC_H

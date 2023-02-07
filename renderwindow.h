@@ -2,15 +2,10 @@
 #define RENDERWINDOW_H
 
 #include <QWindow>
-#include <QOpenGLFunctions_4_1_Core>
 #include <QTimer>
 #include <QElapsedTimer>
-#include <vector>
 
-#include "visualobject.h"
 #include "camera.h"
-
-#include "octahedronball.h"
 
 class QOpenGLContext;
 class Shader;
@@ -48,32 +43,31 @@ private:
     float dt{-10000};
     //Vertex m_v;
     std::map<int, bool> pressedKeys{};
-    std::vector<VisualObject*> mObjects;
-    VisualObject* mia;
+    std::unordered_map<std::string, class VisualObject*> mObjects;
     Camera mCamera{};
     void init(); //initialize things we need before rendering
 
-    QOpenGLContext* mContext{nullptr}; //Our OpenGL context
+    class QOpenGLContext* mContext{nullptr}; //Our OpenGL context
     bool mInitialized{false};
 
-    Shader* mShaderProgram{nullptr}; //holds pointer the GLSL shader program
+    class Shader* mShaderProgram{nullptr}; //holds pointer the GLSL shader program
 
-    GLint mPmatrixUniform; //OPenGL reference to the uniform in the shader program
-    GLint mVmatrixUniform;
-    GLint mMmatrixUniform;
+    GLint mPmatrixUniform{}; //OPenGL reference to the uniform in the shader program
+    GLint mVmatrixUniform{};
+    GLint mMmatrixUniform{};
 
-    GLuint mVAO; //OpenGL reference to our VAO
-    GLuint mVBO; //OpenGL reference to our VBO
+    GLuint mVAO{}; //OpenGL reference to our VAO
+    GLuint mVBO{}; //OpenGL reference to our VBO
 
 
-    QMatrix4x4* mMVPmatrix{nullptr}; //The matrix with the transform for the object we draw
-    QMatrix4x4* mPmatrix{nullptr};
-    QMatrix4x4* mVmatrix{nullptr};
+    class QMatrix4x4* mMVPmatrix{nullptr}; //The matrix with the transform for the object we draw
+    class QMatrix4x4* mPmatrix{nullptr};
+    class QMatrix4x4* mVmatrix{nullptr};
 
-    QTimer* mRenderTimer{nullptr}; //timer that drives the gameloop
-    QElapsedTimer mTimeStart;      //time variable that reads the calculated FPS
+    class QTimer* mRenderTimer{nullptr}; //timer that drives the gameloop
+    QElapsedTimer mTimeStart;            //time variable that reads the calculated FPS
 
-    MainWindow* mMainWindow{nullptr}; //points back to MainWindow to be able to put info in StatusBar
+    class MainWindow* mMainWindow{nullptr}; //points back to MainWindow to be able to put info in StatusBar
 
     class QOpenGLDebugLogger* mOpenGLDebugLogger{nullptr}; //helper class to get some clean debug info from OpenGL
     class Logger* mLogger{nullptr};                        //logger - Output Log in the application
@@ -98,8 +92,8 @@ protected:
     void keyReleaseEvent(QKeyEvent* event) override;
     //    void wheelEvent(QWheelEvent *event) override{}
 
-    void MoveByInput(VisualObject*);
-    void RotateByInput(VisualObject*);
+    void MoveByInput(class VisualObject*);
+    void RotateByInput(class VisualObject*);
     void InitMoveKeys();
 };
 

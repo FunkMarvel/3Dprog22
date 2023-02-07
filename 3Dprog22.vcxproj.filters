@@ -56,7 +56,7 @@
     <ClCompile Include="curve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="interactiveobject.cpp">
+    <ClCompile Include="disc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="linesegment.cpp">
@@ -71,10 +71,16 @@
     <ClCompile Include="mainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="octahedronball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="renderwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tetrahedron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trianglesurface.cpp">
@@ -89,12 +95,6 @@
     <ClCompile Include="xyz.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tetrahedron.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="octahedronball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -106,7 +106,7 @@
     <ClInclude Include="curve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="interactiveobject.h">
+    <ClInclude Include="disc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="linesegment.h">
@@ -118,10 +118,16 @@
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="octahedronball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <QtMoc Include="renderwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <ClInclude Include="shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tetrahedron.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="trianglesurface.h">
@@ -136,20 +142,19 @@
     <ClInclude Include="xyz.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tetrahedron.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="octahedronball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    
+    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
+    
+    
+    
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwindow.ui">

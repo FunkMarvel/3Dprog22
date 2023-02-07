@@ -9,11 +9,10 @@
 #include <QDebug>
 #include <string>
 #include <fstream>
-#include <iostream>
 #include <QDir>
 
-
 #include "disc.h"
+#include "visualobject.h"
 #include "xyz.h"
 #include "cube.h"
 #include "shader.h"
@@ -57,13 +56,13 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
     InitMoveKeys();
 
 
-    mObjects.push_back(new XYZ());
-    mObjects.push_back(new Curve{"../Curve.dat"});
+    mObjects["XYZ"] = new XYZ{};
+    mObjects["Curve"] = new Curve{"../Curve.dat"};
 
-    mObjects.push_back(new TriangleSurface{"../vertices.dat"});
+    mObjects["Surface"] = new TriangleSurface{"../vertices.dat"};
 
-    mObjects.push_back(new Cube());
-    mObjects.push_back(new Disc{true});
+    mObjects["Cube"] = new Cube{};
+    mObjects["Disc"] = new Disc{true};
 }
 
 RenderWindow::~RenderWindow() {
@@ -147,12 +146,11 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     (*it)->init(mVmatrixUniform);
 */
-    for (auto it = mObjects.begin(); it != mObjects.end(); ++it)
-        (*it)->init(mMmatrixUniform);
+    for (auto object : mObjects)
+        object.second->init(mMmatrixUniform);
 
-    mObjects[0]->move(-8, -7, 0);
+    mObjects["XYZ"]->move(-8, -7, 0);
     glBindVertexArray(0); //unbinds any VertexArray - good practice
-
 }
 
 // Called each frame - doing the rendering!!!
@@ -165,8 +163,8 @@ void RenderWindow::render() {
     mCamera.init(mPmatrixUniform, mVmatrixUniform);
     mCamera.perspective(60, 4.0 / 3.0, 0.1, 20.0);
 
-    mTimeStart.restart();        //restart FPS clock
-    if (dt < -9999) dt = 1.0f/mRenderTimer->interval();
+    mTimeStart.restart(); //restart FPS clock
+    if (dt < -9999) dt = 1.0f / mRenderTimer->interval();
     mContext->makeCurrent(this); //must be called every frame (every time mContext->swapBuffers is called)
 
     initializeOpenGLFunctions(); //must call this every frame it seems...
@@ -190,12 +188,12 @@ void RenderWindow::render() {
     //ree
 
     if (XYZ_render) {
-        mObjects[0]->draw();
+        mObjects["XYZ"]->draw();
     }
-    RotateByInput(mObjects[0]);
+    RotateByInput(mObjects["XYZ"]);
 
     if (Curve_render) {
-        auto obj = mObjects[1];
+        auto obj = mObjects["Curve"];
 
         MoveByInput(obj);
         RotateByInput(obj);
@@ -203,7 +201,7 @@ void RenderWindow::render() {
         obj->draw();
     }
     if (Plane_render) {
-        auto obj = mObjects[2];
+        auto obj = mObjects["Surface"];
 
         MoveByInput(obj);
         RotateByInput(obj);
@@ -211,7 +209,7 @@ void RenderWindow::render() {
         obj->draw();
     }
     if (Cube_render) {
-        auto obj = mObjects[3];
+        auto obj = mObjects["Cube"];
 
         MoveByInput(obj);
         RotateByInput(obj);
@@ -221,10 +219,10 @@ void RenderWindow::render() {
 
     float sign{-1.0f};
 
-    if (mObjects[4]->position().length() >= 5) dt *= sign;
+    if (mObjects["Disc"]->position().length() >= 5) dt *= sign;
 
-    if(mRotate) mObjects[4]->move(dt);
-    mObjects[4]->draw();
+    if (mRotate) mObjects["Disc"]->move(dt);
+    mObjects["Disc"]->draw();
 
     mMVPmatrix->setToIdentity();
 
@@ -367,7 +365,7 @@ void RenderWindow::keyPressEvent(QKeyEvent* event) {
     if (Plane_render && event->key() == Qt::Key_1) {
         drawNormals = !drawNormals;
 
-        auto trSurf = reinterpret_cast<TriangleSurface*>(mObjects[2]);
+        auto trSurf = reinterpret_cast<TriangleSurface*>(mObjects["Surface"]);
         trSurf->drawUnitNormals(drawNormals);
     }
 }
