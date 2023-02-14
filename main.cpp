@@ -15,17 +15,22 @@ int main(int argc, char* argv[]) {
     MainWindow w;
     w.show();
 
-    std::vector<float> AVals{
-        1, 1, 1, 0,
-        5, 3, 2, 0,
-        1, 3, 2, 0,
-        0, 0, 0, 1
+    blaze::DynamicMatrix<float> A{
+        { 1, 1, 1 },
+        { 5, 3, 2 },
+        { 1, 3, 2 }
     };
-    QMatrix4x4 A{AVals.data()};
-    QVector4D b{1, 2, 1, 1};
 
-    auto B = A.inverted();
-    qDebug() << B * b;
+    blaze::DynamicVector<float> b{
+        {1},
+        {2},
+        {1}
+    };
+
+    blaze::invert(A);
+    blaze::DynamicVector<float> result = A * b;
+
+    qDebug() << "x = [" << result[0] << ", " << result[1] << ", " << result[2] << "]";
 
     return a.exec();
 }

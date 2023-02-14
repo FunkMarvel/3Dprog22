@@ -57,7 +57,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
 
     mObjects["XYZ"] = new XYZ{};
-    mObjects["Curve"] = new Curve{"../Curve.dat"};
+    mObjects["Curve"] = new Curve{"C:\\Users\\aande\\OneDrive\\Bilder\\Dokumenter\\Matematikk 3\\Oblig 2\\bestFit.dat"};
 
     mObjects["Surface"] = new TriangleSurface{"../vertices.dat"};
 
