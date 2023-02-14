@@ -15,22 +15,5 @@ int main(int argc, char* argv[]) {
     MainWindow w;
     w.show();
 
-    blaze::DynamicMatrix<float> A{
-        { 1, 1, 1 },
-        { 5, 3, 2 },
-        { 1, 3, 2 }
-    };
-
-    blaze::DynamicVector<float> b{
-        {1},
-        {2},
-        {1}
-    };
-
-    blaze::invert(A);
-    blaze::DynamicVector<float> result = A * b;
-
-    qDebug() << "x = [" << result[0] << ", " << result[1] << ", " << result[2] << "]";
-
     return a.exec();
 }
