@@ -21,6 +21,7 @@
 #include "camera.h"
 #include "trianglesurface.h"
 #include "curve.h"
+#include "points.h"
 
 
 RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
@@ -57,7 +58,8 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
 
     mObjects["XYZ"] = new XYZ{};
-    mObjects["Curve"] = new Curve{"C:\\Users\\aande\\OneDrive\\Bilder\\Dokumenter\\Matematikk 3\\Oblig 2\\bestFit.dat"};
+    mObjects["Curve"] = new Curve{"C:\\Users\\aande\\OneDrive\\Bilder\\Dokumenter\\Matematikk 3\\Oblig 2\\cubic.dat"};
+    mObjects["Scatter"] = new Points{"C:\\Users\\aande\\OneDrive\\Bilder\\Dokumenter\\Matematikk 3\\Oblig 2\\points2.dat", 10};
 
     mObjects["Surface"] = new TriangleSurface{"../vertices.dat"};
 
@@ -146,10 +148,10 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     (*it)->init(mVmatrixUniform);
 */
-    for (auto object : mObjects)
+    for (std::pair<const std::string, VisualObject*> object : mObjects)
         object.second->init(mMmatrixUniform);
 
-    mObjects["XYZ"]->move(-8, -7, 0);
+//    mObjects["XYZ"]->move(-8, -7, 0);
     glBindVertexArray(0); //unbinds any VertexArray - good practice
 }
 
@@ -188,12 +190,24 @@ void RenderWindow::render() {
     //ree
 
     if (XYZ_render) {
-        mObjects["XYZ"]->draw();
+        auto obj = mObjects["XYZ"];
+
+        MoveByInput(obj);
+        RotateByInput(obj);
+
+        obj->draw();
     }
     RotateByInput(mObjects["XYZ"]);
 
     if (Curve_render) {
         auto obj = mObjects["Curve"];
+
+        MoveByInput(obj);
+        RotateByInput(obj);
+
+        obj->draw();
+
+        obj = mObjects["Scatter"];
 
         MoveByInput(obj);
         RotateByInput(obj);
@@ -221,8 +235,11 @@ void RenderWindow::render() {
 
     if (mObjects["Disc"]->position().length() >= 5) dt *= sign;
 
-    if (mRotate) mObjects["Disc"]->move(dt);
-    mObjects["Disc"]->draw();
+    if (mRotate) {
+        mObjects["Disc"]->move(dt);
+        mObjects["Disc"]->draw();
+    }
+
 
     mMVPmatrix->setToIdentity();
 
