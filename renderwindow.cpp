@@ -148,7 +148,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     (*it)->init(mVmatrixUniform);
 */
-    for (std::pair<const std::string, VisualObject*> object : mObjects)
+    for (const auto& object : mObjects)
         object.second->init(mMmatrixUniform);
 
 //    mObjects["XYZ"]->move(-8, -7, 0);
