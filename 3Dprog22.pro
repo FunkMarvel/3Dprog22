@@ -14,6 +14,7 @@ SOURCES += main.cpp \
     logger.cpp \
     mainwindow.cpp \
     octahedronball.cpp \
+    pawn.cpp \
     points.cpp \
     renderwindow.cpp \
     shader.cpp \
@@ -369,6 +370,7 @@ HEADERS += \
     logger.h \
     mainwindow.h \
     octahedronball.h \
+    pawn.h \
     points.h \
     renderwindow.h \
     shader.h \
