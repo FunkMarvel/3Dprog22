@@ -10,11 +10,11 @@
 #include <string>
 #include <fstream>
 #include <QDir>
+#include <cmath>
 
 #include "disc.h"
 #include "visualobject.h"
 #include "xyz.h"
-#include "cube.h"
 #include "shader.h"
 #include "mainwindow.h"
 #include "logger.h"
@@ -22,6 +22,7 @@
 #include "trianglesurface.h"
 #include "curve.h"
 #include "points.h"
+#include "pawn.h"
 
 
 RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
@@ -41,14 +42,6 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
     //This is the matrix used to transform (rotate) the triangle
     //You could do without, but then you have to simplify the shader and shader setup
-    mMVPmatrix = new QMatrix4x4{};
-    mMVPmatrix->setToIdentity(); //1, 1, 1, 1 in the diagonal of the matrix
-
-    mPmatrix = new QMatrix4x4{};
-    mPmatrix->setToIdentity();
-
-    mVmatrix = new QMatrix4x4{};
-    mVmatrix->setToIdentity();
 
     //Make the gameloop timer;
     mRenderTimer = new QTimer(this);
@@ -63,7 +56,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
     mObjects["Surface"] = new TriangleSurface{"../vertices.dat"};
 
-    mObjects["Cube"] = new Cube{};
+    mObjects["Pawn"] = new Pawn{};
     mObjects["Disc"] = new Disc{true};
 }
 
@@ -148,11 +141,19 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     (*it)->init(mVmatrixUniform);
 */
-    for (const auto& object : mObjects)
+    _pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
+    for (const auto& object : mObjects) {
         object.second->init(mMmatrixUniform);
+        if (object.first == "Pawn") continue;
+        object.second->move(0.f, -_pawn->getRadius(), 0.f);
+    }
 
 //    mObjects["XYZ"]->move(-8, -7, 0);
     glBindVertexArray(0); //unbinds any VertexArray - good practice
+    mCamera.init(mPmatrixUniform, mVmatrixUniform);
+    mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
+    mCamera.translate(0, 10, -10);
+    mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
 }
 
 // Called each frame - doing the rendering!!!
@@ -161,9 +162,6 @@ void RenderWindow::render() {
     //mPmatrix->setToIdentity();
     //mVmatrix->setToIdentity();
     // mPmatrix->perspective(60,4.0/3.0,0.1,10.0);
-
-    mCamera.init(mPmatrixUniform, mVmatrixUniform);
-    mCamera.perspective(60, 4.0 / 3.0, 0.1, 20.0);
 
     mTimeStart.restart(); //restart FPS clock
     if (dt < -9999) dt = 1.0f / mRenderTimer->interval();
@@ -178,70 +176,16 @@ void RenderWindow::render() {
     glUseProgram(mShaderProgram->getProgram());
 
     //Moveing camera
-    mCamera.translate(0, 0, 10);
-    mCamera.lookAt(QVector3D{0, 0, 10}, QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
+    mCamera.setPosition(_pawn->position() + QVector3D{0,10,-10});
+    mCamera.lookAt(_pawn->position(), QVector3D{0,1,0});
     mCamera.update();
 
+    MoveByInput(_pawn);
+    RotateByInput(_pawn);
 
-    //the actual draw call
-
-    //    for (auto it=mObjects.begin();it!= mObjects.end(); it++)
-    //        (*it)->draw();
-    //ree
-
-    if (XYZ_render) {
-        auto obj = mObjects["XYZ"];
-
-        MoveByInput(obj);
-        RotateByInput(obj);
-
-        obj->draw();
+    for (const auto& obj : mObjects) {
+        obj.second->draw();
     }
-    RotateByInput(mObjects["XYZ"]);
-
-    if (Curve_render) {
-        auto obj = mObjects["Curve"];
-
-        MoveByInput(obj);
-        RotateByInput(obj);
-
-        obj->draw();
-
-        obj = mObjects["Scatter"];
-
-        MoveByInput(obj);
-        RotateByInput(obj);
-
-        obj->draw();
-    }
-    if (Plane_render) {
-        auto obj = mObjects["Surface"];
-
-        MoveByInput(obj);
-        RotateByInput(obj);
-
-        obj->draw();
-    }
-    if (Cube_render) {
-        auto obj = mObjects["Cube"];
-
-        MoveByInput(obj);
-        RotateByInput(obj);
-
-        obj->draw();
-    }
-
-    float sign{-1.0f};
-
-    if (mObjects["Disc"]->position().length() >= 5) dt *= sign;
-
-    if (mRotate) {
-        mObjects["Disc"]->move(dt);
-        mObjects["Disc"]->draw();
-    }
-
-
-    mMVPmatrix->setToIdentity();
 
     //Calculate framerate before
     // checkForGLerrors() because that call takes a long time
@@ -378,12 +322,15 @@ void RenderWindow::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Escape) {
         mMainWindow->close(); //Shuts down the whole program
     }
-
-    if (Plane_render && event->key() == Qt::Key_1) {
+    else if (Plane_render && event->key() == Qt::Key_1) {
         drawNormals = !drawNormals;
 
         auto trSurf = reinterpret_cast<TriangleSurface*>(mObjects["Surface"]);
         trSurf->drawUnitNormals(drawNormals);
+    }
+    else if (event->key() == Qt::Key_Space && mObjects.find("Pawn") != mObjects.end()) {
+        Pawn* pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
+        pawn->velocity = QVector3D{0.f, std::sqrt(2.f*pawn->jumpHeight*_gravity), 0.f};
     }
 }
 
@@ -392,38 +339,38 @@ void RenderWindow::keyReleaseEvent(QKeyEvent* event) {
 }
 
 void RenderWindow::MoveByInput(VisualObject* obj) {
-    QVector3D movVec{};
+    _movVec = QVector3D{0.f,0.f,0.f};
 
     QVector3D right{1, 0, 0};
-    QVector3D up{0, 1, 0};
+//    QVector3D up{0, 1, 0};
     QVector3D out{0, 0, 1};
 
     for (auto key : pressedKeys) {
         if (!key.second) continue;
 
         switch (key.first) {
-        case Qt::Key_Right:
-            movVec += right;
+        case Qt::Key_A:
+            _movVec += right;
             break;
 
-        case Qt::Key_Left:
-            movVec -= right;
+        case Qt::Key_D:
+            _movVec -= right;
             break;
 
-        case Qt::Key_Up:
-            movVec += up;
+//        case Qt::Key_Space:
+//            movVec += up;
+//            break;
+
+//        case Qt::Key_S:
+//            movVec -= up;
+//            break;
+
+        case Qt::Key_W:
+            _movVec += out;
             break;
 
-        case Qt::Key_Down:
-            movVec -= up;
-            break;
-
-        case Qt::Key_Space:
-            movVec += out;
-            break;
-
-        case Qt::Key_Shift:
-            movVec -= out;
+        case Qt::Key_S:
+            _movVec -= out;
             break;
 
         default:
@@ -431,47 +378,49 @@ void RenderWindow::MoveByInput(VisualObject* obj) {
         }
     }
 
-    movVec.normalize();
-    movVec /= mRenderTimer->interval();
-    obj->move(movVec.x(), movVec.y(), movVec.z());
+    _movVec.normalize();
+    _movVec /= mRenderTimer->interval();
+    obj->move(_movVec.x(), _movVec.y(), _movVec.z());
 }
 
 void RenderWindow::RotateByInput(VisualObject* obj) {
     QVector3D rotVec{};
     bool bRotating{false};
 
-    QVector3D xrot{1, 0, 0};
+//    QVector3D xrot{1, 0, 0};
     QVector3D yrot{0, 1, 0};
-    QVector3D zrot{0, 0, 1};
+//    QVector3D zrot{0, 0, 1};
 
     for (auto key : pressedKeys) {
         if (!key.second) continue;
 
-        bRotating = true;
+
 
         switch (key.first) {
-        case Qt::Key_S:
-            rotVec += xrot;
-            break;
+//        case Qt::Key_S:
+//           rotVec += xrot;
+//            break;
 
-        case Qt::Key_W:
-            rotVec -= xrot;
-            break;
+//        case Qt::Key_W:
+//            rotVec -= xrot;
+//            break;
 
-        case Qt::Key_D:
-            rotVec += yrot;
-            break;
+//        case Qt::Key_D:
+//            rotVec += yrot;
+//            break;
 
-        case Qt::Key_A:
+//        case Qt::Key_A:
+//            rotVec -= yrot;
+//            break;
+
+        case Qt::Key_Q:
+            bRotating = true;
             rotVec -= yrot;
             break;
 
-        case Qt::Key_Q:
-            rotVec -= zrot;
-            break;
-
         case Qt::Key_E:
-            rotVec += zrot;
+            bRotating = true;
+            rotVec += yrot;
             break;
 
         default:
@@ -480,7 +429,10 @@ void RenderWindow::RotateByInput(VisualObject* obj) {
     }
 
     rotVec.normalize();
-    if (bRotating) obj->Rotate(1.0f, rotVec.x(), rotVec.y(), rotVec.z());
+
+    if (bRotating) {
+        obj->rotate(1.f, rotVec.x(), rotVec.y(), rotVec.z());
+    }
 }
 
 void RenderWindow::InitMoveKeys() {

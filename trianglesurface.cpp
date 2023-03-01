@@ -113,10 +113,10 @@ void TriangleSurface::move(float dx, float dy, float dz) {
     }
 }
 
-void TriangleSurface::Rotate(float deg, float x, float y, float z) {
-    VisualObject::Rotate(deg, x, y, z);
+void TriangleSurface::rotate(float deg, float x, float y, float z) {
+    VisualObject::rotate(deg, x, y, z);
 
     for (auto normal : mNormals) {
-        normal->Rotate(deg, x, y, z);
+        normal->rotate(deg, x, y, z);
     }
 }

@@ -14,4 +14,5 @@ public:
     ~OctahedronBall() override;
     void init(GLint matrixUniform) override;
     void draw() override;
+
 };

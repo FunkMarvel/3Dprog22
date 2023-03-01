@@ -17,11 +17,12 @@ void Camera::perspective(int degrees, double aspect, double nearPlane, double fa
 }
 
 void Camera::lookAt(const QVector3D& eye, const QVector3D& at, const QVector3D& up) {
+    _mVMatrix.setToIdentity();
     _mVMatrix.lookAt(eye, at, up);
 }
 
 void Camera::lookAt(const QVector3D& at, const QVector3D& up) {
-    _mVMatrix.lookAt(_mEye, at, up);
+    lookAt(_mEye, at, up);
 }
 
 void Camera::update() {
@@ -31,5 +32,14 @@ void Camera::update() {
 }
 
 void Camera::translate(float dx, float dy, float dz) {
-    _mEye + QVector3D{dx, dy, dz};
+    _mEye += QVector3D{dx, dy, dz};
+}
+
+void Camera::setPosition(QVector3D pos)
+{
+    _mEye.setX(0);
+    _mEye.setY(0);
+    _mEye.setZ(0);
+
+    translate(pos.x(), pos.y(), pos.z());
 }

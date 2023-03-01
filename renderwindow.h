@@ -35,16 +35,27 @@ public:
     bool Cube_render{false};
     bool drawNormals{false};
 
+    template <typename T> int sgn(T val) {
+        return (T(0) < val) - (val < T(0));
+    }
+
 private
 slots:
     void render(); //the actual render - function
 
 private:
     float dt{-10000};
+    float _gravity{-9.81f};
+    QVector3D _movVec{};
     //Vertex m_v;
+
     std::map<int, bool> pressedKeys{};
+
     std::unordered_map<std::string, class VisualObject*> mObjects;
+    class Pawn* _pawn;
+
     Camera mCamera{};
+
     void init(); //initialize things we need before rendering
 
     class QOpenGLContext* mContext{nullptr}; //Our OpenGL context
@@ -59,10 +70,6 @@ private:
     GLuint mVAO{}; //OpenGL reference to our VAO
     GLuint mVBO{}; //OpenGL reference to our VBO
 
-
-    class QMatrix4x4* mMVPmatrix{nullptr}; //The matrix with the transform for the object we draw
-    class QMatrix4x4* mPmatrix{nullptr};
-    class QMatrix4x4* mVmatrix{nullptr};
 
     class QTimer* mRenderTimer{nullptr}; //timer that drives the gameloop
     QElapsedTimer mTimeStart;            //time variable that reads the calculated FPS

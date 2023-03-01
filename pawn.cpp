@@ -27,9 +27,14 @@ void Pawn::move(float x, float y, float z)
     }
 }
 
-void Pawn::Rotate(float l, float r, float u, float d)
+void Pawn::rotate(float l, float r, float u, float d)
 {
     for (const auto& component : _visualComponents) {
-        component.second->Rotate(l, r, u, d);
+        component.second->rotate(l, r, u, d);
     }
+}
+
+float Pawn::getRadius() const
+{
+    return 1.f;
 }

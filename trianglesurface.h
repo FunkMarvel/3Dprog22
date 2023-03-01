@@ -14,7 +14,7 @@ public:
     void draw() override;
 
     void move(float dx, float dy, float dz) override;
-    void Rotate(float deg, float x, float y, float z) override;
+    void rotate(float deg, float x, float y, float z) override;
 
 private:
     bool bDrawUnitNormals{false};

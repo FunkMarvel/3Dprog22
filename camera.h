@@ -23,6 +23,7 @@ public:
     void lookAt(const QVector3D& at, const QVector3D& up);
     void update();
     void translate(float dx, float dy, float dz);
+    void setPosition(QVector3D pos);
 
     QVector3D eyePos() const {
         return _mEye;
