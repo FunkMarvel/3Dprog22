@@ -175,13 +175,11 @@ void RenderWindow::render() {
     //what shader to use
     glUseProgram(mShaderProgram->getProgram());
 
-    //Moveing camera
-    mCamera.setPosition(_pawn->position() + QVector3D{0,10,-10});
-    mCamera.lookAt(_pawn->position(), QVector3D{0,1,0});
-    mCamera.update();
-
     MoveByInput(_pawn);
     RotateByInput(_pawn);
+
+    //Moveing camera
+    mCamera.update();
 
     for (const auto& obj : mObjects) {
         obj.second->draw();
@@ -381,6 +379,9 @@ void RenderWindow::MoveByInput(VisualObject* obj) {
     _movVec.normalize();
     _movVec /= mRenderTimer->interval();
     obj->move(_movVec.x(), _movVec.y(), _movVec.z());
+
+    mCamera.translate(_movVec.x(), _movVec.y(), _movVec.z());
+    mCamera.lookAt(_pawn->position(), QVector3D{0,1,0});
 }
 
 void RenderWindow::RotateByInput(VisualObject* obj) {
@@ -432,6 +433,8 @@ void RenderWindow::RotateByInput(VisualObject* obj) {
 
     if (bRotating) {
         obj->rotate(1.f, rotVec.x(), rotVec.y(), rotVec.z());
+        mCamera.rotate(QVector4D{1.f, rotVec.x(), rotVec.y(), rotVec.z()}, _pawn->position());
+        mCamera.lookAt(_pawn->position(), yrot);
     }
 }
 

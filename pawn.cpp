@@ -22,13 +22,17 @@ void Pawn::draw()
 
 void Pawn::move(float x, float y, float z)
 {
+    QVector4D moveVec{x,y,z, 1};
+    moveVec = mRotation * moveVec;
+    mPosition += moveVec;
     for (const auto& component : _visualComponents) {
-        component.second->move(x, y, z);
+        component.second->move(moveVec.x(), moveVec.y(), moveVec.z());
     }
 }
 
 void Pawn::rotate(float l, float r, float u, float d)
 {
+    mRotation.rotate(l, r, u, d);
     for (const auto& component : _visualComponents) {
         component.second->rotate(l, r, u, d);
     }
