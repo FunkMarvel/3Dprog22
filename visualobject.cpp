@@ -29,3 +29,8 @@ void VisualObject::rotate(QVector3D point, float l, float r, float u, float d)
     mMatrix.rotate(l, r, u, d);
     mMatrix.translate(point.x(), point.y(), point.z());
 }
+
+void VisualObject::onOverlap(const QVector3D &hitPos)
+{
+
+}
