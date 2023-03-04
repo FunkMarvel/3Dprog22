@@ -1,6 +1,7 @@
 #include "octahedronball.h"
 #include "pawn.h"
 #include "points.h"
+#include "cube.h"
 
 Pawn::Pawn()
 {
@@ -57,6 +58,7 @@ void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *> obje
                 scatter->onOverlap(QVector3D{closestPoint.w(), 0, 0});
                 score++;
             }
+
 
             continue;
         }

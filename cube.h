@@ -10,6 +10,8 @@ public:
     void init(GLint matrixUniform) override;
     void draw() override;
     void rotate(QMatrix4x4 matrix);
-};
+
+    virtual void onOverlap(const QVector3D& hitPos) override;
+ };
 
 #endif // CUBE_H
