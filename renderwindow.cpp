@@ -190,6 +190,7 @@ void RenderWindow::render() {
     for (const auto& obj : mObjects) {
         obj.second->draw();
     }
+    mMainWindow->updateScore(_pawn->score);
 
     //Calculate framerate before
     // checkForGLerrors() because that call takes a long time
