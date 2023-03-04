@@ -13,6 +13,9 @@ public:
     void draw() override;
     void init(GLint matrixUniform) override;
 
+    virtual void onOverlap(const QVector3D& hitPos) override;
+    QVector4D getClosestPoint(const QVector3D& pos) const;
+
 private:
     int m_pointSize{1};
 };
