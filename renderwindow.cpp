@@ -388,6 +388,7 @@ void RenderWindow::MoveByInput(VisualObject* obj) {
 
     _movVec.normalize();
     _movVec /= mRenderTimer->interval();
+    _movVec *= _pawn->speed;
     obj->move(_movVec.x(), _movVec.y(), _movVec.z());
 
     mCamera.translate(_movVec.x(), _movVec.y(), _movVec.z());
@@ -442,8 +443,8 @@ void RenderWindow::RotateByInput(VisualObject* obj) {
     rotVec.normalize();
 
     if (bRotating) {
-        obj->rotate(1.f, rotVec.x(), rotVec.y(), rotVec.z());
-        mCamera.rotate(QVector4D{1.f, rotVec.x(), rotVec.y(), rotVec.z()}, _pawn->position());
+        obj->rotate(_pawn->turningSpeed, rotVec.x(), rotVec.y(), rotVec.z());
+        mCamera.rotate(QVector4D{_pawn->turningSpeed, rotVec.x(), rotVec.y(), rotVec.z()}, _pawn->position());
         mCamera.lookAt(_pawn->position(), yrot);
     }
 }

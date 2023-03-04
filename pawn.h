@@ -29,6 +29,8 @@ public:
     void collisionChecker(std::unordered_map<std::string, VisualObject*> objectsToCheck);
 
     QVector3D velocity{0.f, 0.f, 0.f};
+    float speed{4};
+    float turningSpeed{2};
     float jumpHeight{1.5f};
 
     int score{};
