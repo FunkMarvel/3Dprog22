@@ -158,7 +158,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mCamera.translate(0, 10, -10);
     mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
 
-    mObjects["Cube"]->move(0,1,0);
+    mObjects["Cube"]->move(0,5,0);
 
 }
 
