@@ -157,6 +157,9 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
     mCamera.translate(0, 10, -10);
     mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
+
+    mObjects["Cube"]->move(0,1,0);
+
 }
 
 // Called each frame - doing the rendering!!!
