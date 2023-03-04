@@ -390,7 +390,10 @@ FORMS += \
 DISTFILES += \
     datafiles/bestFit.dat \
     datafiles/cubic.dat \
+    datafiles/curve.dat \
+    datafiles/lissajous.dat \
     datafiles/points.dat \
     datafiles/points2.dat \
+    datafiles/vertices.dat \
     plainshader.frag \
     plainshader.vert
