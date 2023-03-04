@@ -8,6 +8,10 @@
 class Vertex {
 public:
     Vertex();
+    Vertex(const Vertex &) = default;
+    Vertex(Vertex &&) = default;
+    Vertex &operator=(const Vertex &) = default;
+    Vertex &operator=(Vertex &&) = default;
     Vertex(std::initializer_list<float> initList);
 
     friend std::ostream& operator<<(std::ostream& os, const Vertex& v);
