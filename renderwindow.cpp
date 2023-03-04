@@ -25,6 +25,7 @@
 #include "points.h"
 #include "pawn.h"
 #include "cube.h"
+#include "door.h"
 
 
 RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
@@ -62,6 +63,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
     mObjects["NPC"] = new NPC{};
 //    mObjects["Disc"] = new Disc{true};
 
+    mObjects["Door"] = new Door{};
     mObjects["Cube"] = new Cube{};
 }
 
@@ -160,7 +162,8 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mCamera.translate(0, 10, -10);
     mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
 
-    mObjects["Cube"]->move(0,1,0);
+    mObjects["Cube"]->move(0,5,0);
+    mObjects["Door"]->move(0,5,0);
     mObjects["NPC"]->move(10, 1, 3);
 }
 

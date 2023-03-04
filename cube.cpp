@@ -18,12 +18,12 @@ Cube::Cube() {
     mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 1, 0});
     mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 0, 1});
     //Floor if needed
-    mVertices.push_back(Vertex{10.0, -5.0, 10.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 0, 1, 0});
-    mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 0, 1});
-    mVertices.push_back(Vertex{10.0, -5.0, 10.0, 0, 0, 1});
-    mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 1, 0, 0});
+    mVertices.push_back(Vertex{10.0, -4.9, 10.0, 1, 0, 0});
+    mVertices.push_back(Vertex{-10.0, -4.9, -5.0, 0, 1, 0});
+    mVertices.push_back(Vertex{10.0, -4.9, -5.0, 0, 0, 1});
+    mVertices.push_back(Vertex{10.0, -4.9, 10.0, 0, 0, 1});
+    mVertices.push_back(Vertex{-10.0, -4.9, 10.0, 0, 1, 0});
+    mVertices.push_back(Vertex{-10.0, -4.9, -5.0, 1, 0, 0});
 
     //Right side of the house
     mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 1});
@@ -68,13 +68,6 @@ Cube::Cube() {
    mVertices.push_back(Vertex{1.2, 5.0, -5.0, 1, 0, 0});
 
 
-   //DOOOR
-   mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
 
     mMatrix.setToIdentity();
 }
@@ -117,19 +110,6 @@ void Cube::draw() {
 
 void Cube::rotate(QMatrix4x4 matrix) {
     mMatrix = matrix;
-}
-
-void Cube::onOverlap(const QVector3D& hitPos)
-{
-
-  qDebug() << "Overlap with door";
-
-   mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0.4, 0.2, 0.1});
-   mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
 }
 
 

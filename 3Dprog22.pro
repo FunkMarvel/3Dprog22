@@ -10,6 +10,7 @@ SOURCES += main.cpp \
     cube.cpp \
     curve.cpp \
     disc.cpp \
+    door.cpp \
     linesegment.cpp \
     logger.cpp \
     mainwindow.cpp \
@@ -368,6 +369,7 @@ HEADERS += \
     cube.h \
     curve.h \
     disc.h \
+    door.h \
     linesegment.h \
     logger.h \
     mainwindow.h \
