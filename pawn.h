@@ -1,6 +1,7 @@
 #ifndef PAWN_H
 #define PAWN_H
 
+#include "spherecollider.h"
 #include "visualobject.h"
 
 class Pawn : public VisualObject
@@ -12,6 +13,7 @@ public:
 
 private:
     std::unordered_map<std::string, VisualObject*> _visualComponents{};
+    physics::SphereCollider _collider;
 //    Camera _camera{};
 
 
@@ -24,8 +26,12 @@ public:
 
     float getRadius() const;
 
+    void collisionChecker(std::unordered_map<std::string, VisualObject*> objectsToCheck);
+
     QVector3D velocity{0.f, 0.f, 0.f};
     float jumpHeight{1.5f};
+
+    int score{};
 };
 
 #endif // PAWN_H
