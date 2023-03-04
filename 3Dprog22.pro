@@ -13,6 +13,7 @@ SOURCES += main.cpp \
     linesegment.cpp \
     logger.cpp \
     mainwindow.cpp \
+    npc.cpp \
     octahedronball.cpp \
     pawn.cpp \
     points.cpp \
@@ -370,6 +371,7 @@ HEADERS += \
     linesegment.h \
     logger.h \
     mainwindow.h \
+    npc.h \
     octahedronball.h \
     pawn.h \
     points.h \
