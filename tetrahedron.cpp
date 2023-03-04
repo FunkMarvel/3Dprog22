@@ -2,24 +2,24 @@
 
 Tetrahedron::Tetrahedron() {
     // ABD
-    mVertices.push_back(Vertex{sqrt(8 / 9.0f), 0, -1 / 3.0f, 25 / 255.0f, 155 / 255.0f, 76 / 255.0f});
-    mVertices.push_back(Vertex{-sqrt(2 / 9.0f), sqrt(2 / 3.0f), -1 / 3.0f, 137 / 255.0f, 18 / 255.0f, 20 / 255.0f});
+    mVertices.push_back(Vertex{std::sqrt(8 / 9.0f), 0, -1 / 3.0f, 25 / 255.0f, 155 / 255.0f, 76 / 255.0f});
+    mVertices.push_back(Vertex{-std::sqrt(2 / 9.0f), std::sqrt(2 / 3.0f), -1 / 3.0f, 137 / 255.0f, 18 / 255.0f, 20 / 255.0f});
     mVertices.push_back(Vertex{0, 0, -1, 13 / 255.0f, 72 / 255.0f, 172 / 255.0f});
 
     // BCD
-    mVertices.push_back(Vertex{-sqrt(2 / 9.0f), sqrt(2 / 3.0f), -1 / 3.0f, 25 / 255.0f, 155 / 255.0f, 76 / 255.0f});
-    mVertices.push_back(Vertex{-sqrt(2 / 9.0f), -sqrt(2 / 3.0f), -1 / 3.0f, 137 / 255.0f, 18 / 255.0f, 20 / 255.0f});
+    mVertices.push_back(Vertex{-std::sqrt(2 / 9.0f), std::sqrt(2 / 3.0f), -1 / 3.0f, 25 / 255.0f, 155 / 255.0f, 76 / 255.0f});
+    mVertices.push_back(Vertex{-std::sqrt(2 / 9.0f), -std::sqrt(2 / 3.0f), -1 / 3.0f, 137 / 255.0f, 18 / 255.0f, 20 / 255.0f});
     mVertices.push_back(Vertex{0, 0, -1, 13 / 255.0f, 72 / 255.0f, 172 / 255.0f});
 
     // CAD
-    mVertices.push_back(Vertex{-sqrt(2 / 9.0f), -sqrt(2 / 3.0f), -1 / 3.0f, 25 / 255.0f, 155 / 255.0f, 76 / 255.0f});
-    mVertices.push_back(Vertex{sqrt(8 / 9.0f), 0, -1 / 3.0f, 137 / 255.0f, 18 / 255.0f, 20 / 255.0f});
+    mVertices.push_back(Vertex{-std::sqrt(2 / 9.0f), -std::sqrt(2 / 3.0f), -1 / 3.0f, 25 / 255.0f, 155 / 255.0f, 76 / 255.0f});
+    mVertices.push_back(Vertex{std::sqrt(8 / 9.0f), 0, -1 / 3.0f, 137 / 255.0f, 18 / 255.0f, 20 / 255.0f});
     mVertices.push_back(Vertex{0, 0, -1, 13 / 255.0f, 72 / 255.0f, 172 / 255.0f});
 
     // ACB
-    mVertices.push_back(Vertex{sqrt(8 / 9.0f), 0, -1 / 3.0f, 25 / 255.0f, 155 / 255.0f, 76 / 255.0f});
-    mVertices.push_back(Vertex{-sqrt(2 / 9.0f), -sqrt(2 / 3.0f), -1 / 3.0f, 137 / 255.0f, 18 / 255.0f, 20 / 255.0f});
-    mVertices.push_back(Vertex{-sqrt(2 / 9.0f), sqrt(2 / 3.0f), -1 / 3.0f, 13 / 255.0f, 72 / 255.0f, 172 / 255.0f});
+    mVertices.push_back(Vertex{std::sqrt(8 / 9.0f), 0, -1 / 3.0f, 25 / 255.0f, 155 / 255.0f, 76 / 255.0f});
+    mVertices.push_back(Vertex{-std::sqrt(2 / 9.0f), -std::sqrt(2 / 3.0f), -1 / 3.0f, 137 / 255.0f, 18 / 255.0f, 20 / 255.0f});
+    mVertices.push_back(Vertex{-std::sqrt(2 / 9.0f), std::sqrt(2 / 3.0f), -1 / 3.0f, 13 / 255.0f, 72 / 255.0f, 172 / 255.0f});
 
     mMatrix.setToIdentity();
 }
