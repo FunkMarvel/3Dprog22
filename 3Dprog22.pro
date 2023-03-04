@@ -18,6 +18,7 @@ SOURCES += main.cpp \
     points.cpp \
     renderwindow.cpp \
     shader.cpp \
+    spherecollider.cpp \
     tetrahedron.cpp \
     trianglesurface.cpp \
     vertex.cpp \
@@ -374,6 +375,7 @@ HEADERS += \
     points.h \
     renderwindow.h \
     shader.h \
+    spherecollider.h \
     tetrahedron.h \
     trianglesurface.h \
     vertex.h \
@@ -384,5 +386,9 @@ FORMS += \
     mainwindow.ui
 
 DISTFILES += \
+    datafiles/bestFit.dat \
+    datafiles/cubic.dat \
+    datafiles/points.dat \
+    datafiles/points2.dat \
     plainshader.frag \
     plainshader.vert
