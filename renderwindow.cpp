@@ -13,6 +13,7 @@
 #include <cmath>
 
 #include "disc.h"
+#include "npc.h"
 #include "visualobject.h"
 #include "xyz.h"
 #include "shader.h"
@@ -52,13 +53,14 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
 
     mObjects["XYZ"] = new XYZ{};
-    mObjects["Curve"] = new Curve{"../3Dprog22/datafiles/cubic.dat"};
+//    mObjects["Curve"] = new Curve{"../3Dprog22/datafiles/cubic.dat"};
     mObjects["Scatter"] = new Points{"../3Dprog22/datafiles/points.dat", 10};
 
     mObjects["Surface"] = new TriangleSurface{"../3Dprog22/datafiles/vertices.dat"};
 
     mObjects["Pawn"] = new Pawn{};
-    mObjects["Disc"] = new Disc{true};
+    mObjects["NPC"] = new NPC{};
+//    mObjects["Disc"] = new Disc{true};
 
     mObjects["Cube"] = new Cube{};
 }
@@ -159,7 +161,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
 
     mObjects["Cube"]->move(0,1,0);
-
+    mObjects["NPC"]->move(10, 1, 3);
 }
 
 // Called each frame - doing the rendering!!!
