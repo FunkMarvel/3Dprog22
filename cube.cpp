@@ -3,20 +3,20 @@
 Cube::Cube() {
 
     //Furthest Back of building in Z
-    mVertices.push_back(Vertex{1.0, 1.0, -1.0, 0, 0, 1});
-    mVertices.push_back(Vertex{1.0, -1.0, -1.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-1.0, -1.0, -1.0, 1, 0, 0});
-     mVertices.push_back(Vertex{1.0, 1.0, -1.0, 0, 0, 1});
-     mVertices.push_back(Vertex{-1.0, -1.0, -1.0, 0, 1, 0});
-     mVertices.push_back(Vertex{-1.0, 1.0, -1.0, 1, 0, 0});
+    mVertices.push_back(Vertex{10.0, 10.0, -1.0, 0, 0, 1});
+    mVertices.push_back(Vertex{10.0, -1.0, -1.0, 0, 1, 0});
+    mVertices.push_back(Vertex{-10.0, -1.0, -1.0, 1, 0, 0});
+     mVertices.push_back(Vertex{10.0, 10.0, -1.0, 0, 0, 1});
+     mVertices.push_back(Vertex{-10.0, -1.0, -1.0, 0, 1, 0});
+     mVertices.push_back(Vertex{-10.0, 10.0, -1.0, 1, 0, 0});
 
     //Left wall of the building
-    mVertices.push_back(Vertex{-1.0, -1.0, -1.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-1.0, -1.0, 1.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-1.0, 1.0, 1.0, 0, 0, 1});
-    mVertices.push_back(Vertex{-1.0, -1.0, -1.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-1.0, 1.0, 1.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-1.0, 1.0, -1.0, 0, 0, 1});
+    mVertices.push_back(Vertex{-10.0, -10.0, -1.0, 1, 0, 0});
+    mVertices.push_back(Vertex{-10.0, -10.0, 10.0, 0, 1, 0});
+    mVertices.push_back(Vertex{-10.0, 10.0, 10.0, 0, 0, 1});
+    mVertices.push_back(Vertex{-10.0, -10.0, -1.0, 1, 0, 0});
+    mVertices.push_back(Vertex{-10.0, 10.0, 10.0, 0, 1, 0});
+    mVertices.push_back(Vertex{-10.0, 10.0, -1.0, 0, 0, 1});
     //Floor if needed
     //mVertices.push_back(Vertex{1.0, -1.0, 1.0, 1, 0, 0});
     // mVertices.push_back(Vertex{-1.0, -1.0, -1.0, 0, 1, 0});
