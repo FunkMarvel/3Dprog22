@@ -22,6 +22,7 @@ public:
     bool hitCheck(VisualObject* obj);
     bool hitCheck(const QVector3D& pos);
     bool hitCheck(const QVector4D& pos);
+    bool hitCheck(const SphereCollider& someCollider);
 
     float radius() const;
     void setRadius(float newRadius);
