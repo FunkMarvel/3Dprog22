@@ -26,6 +26,11 @@ bool SphereCollider::hitCheck(const QVector4D &pos)
     return hitCheck(QVector3D{pos.x(), pos.y(), pos.z()});
 }
 
+bool SphereCollider::hitCheck(SphereCollider &someCollider)
+{
+    return ((_position - someCollider.position()).length() <= _radius + someCollider.radius());
+}
+
 float SphereCollider::radius() const
 {
     return _radius;

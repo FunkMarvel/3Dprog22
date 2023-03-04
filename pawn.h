@@ -26,7 +26,7 @@ public:
 
     float getRadius() const;
 
-    void collisionChecker(std::unordered_map<std::string, VisualObject*> objectsToCheck);
+    void collisionChecker(std::unordered_map<std::string, VisualObject*>& objectsToCheck);
 
     QVector3D velocity{0.f, 0.f, 0.f};
     float speed{4};

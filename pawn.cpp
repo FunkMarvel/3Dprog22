@@ -46,7 +46,7 @@ float Pawn::getRadius() const
     return 1.f;
 }
 
-void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *> objectsToCheck)
+void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *>& objectsToCheck)
 {
     for (const auto& obj : objectsToCheck) {
         if (obj.first == "Scatter") {
@@ -60,6 +60,7 @@ void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *> obje
 
             continue;
         }
+
         if (_collider.hitCheck(obj.second)) obj.second->onOverlap(position());
     }
 }
