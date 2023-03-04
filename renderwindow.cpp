@@ -51,10 +51,10 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
 
     mObjects["XYZ"] = new XYZ{};
-    mObjects["Curve"] = new Curve{"C:\\Users\\aande\\OneDrive\\Bilder\\Dokumenter\\Matematikk 3\\Oblig 2\\cubic.dat"};
-    mObjects["Scatter"] = new Points{"C:\\Users\\aande\\OneDrive\\Bilder\\Dokumenter\\Matematikk 3\\Oblig 2\\points2.dat", 10};
+    mObjects["Curve"] = new Curve{"../3Dprog22/datafiles/cubic.dat"};
+    mObjects["Scatter"] = new Points{"../3Dprog22/datafiles/points.dat", 10};
 
-    mObjects["Surface"] = new TriangleSurface{"../vertices.dat"};
+    mObjects["Surface"] = new TriangleSurface{"../3Dprog22/datafiles/vertices.dat"};
 
     mObjects["Pawn"] = new Pawn{};
     mObjects["Disc"] = new Disc{true};
@@ -144,7 +144,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     _pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
     for (const auto& object : mObjects) {
         object.second->init(mMmatrixUniform);
-        if (object.first == "Pawn") continue;
+        if (object.first == "Pawn" || object.first == "Scatter") continue;
         object.second->move(0.f, -_pawn->getRadius(), 0.f);
     }
 
@@ -180,6 +180,9 @@ void RenderWindow::render() {
 
     //Moveing camera
     mCamera.update();
+
+    _pawn->collisionChecker(mObjects);
+    qDebug() << "player: " << _pawn->position() << "\n";
 
     for (const auto& obj : mObjects) {
         obj.second->draw();
