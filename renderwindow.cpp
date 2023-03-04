@@ -13,6 +13,7 @@
 #include <cmath>
 
 #include "disc.h"
+#include "npc.h"
 #include "visualobject.h"
 #include "xyz.h"
 #include "shader.h"
@@ -52,13 +53,14 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
 
     mObjects["XYZ"] = new XYZ{};
-    mObjects["Curve"] = new Curve{"../3Dprog22/datafiles/cubic.dat"};
+//    mObjects["Curve"] = new Curve{"../3Dprog22/datafiles/cubic.dat"};
     mObjects["Scatter"] = new Points{"../3Dprog22/datafiles/points.dat", 10};
 
     mObjects["Surface"] = new TriangleSurface{"../3Dprog22/datafiles/vertices.dat"};
 
     mObjects["Pawn"] = new Pawn{};
-    mObjects["Disc"] = new Disc{true};
+    mObjects["NPC"] = new NPC{};
+//    mObjects["Disc"] = new Disc{true};
 
     mObjects["Cube"] = new Cube{};
 }
@@ -158,8 +160,8 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mCamera.translate(0, 10, -10);
     mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
 
-    mObjects["Cube"]->move(0,5,26);
-
+    mObjects["Cube"]->move(0,1,0);
+    mObjects["NPC"]->move(10, 1, 3);
 }
 
 // Called each frame - doing the rendering!!!
@@ -193,6 +195,7 @@ void RenderWindow::render() {
     for (const auto& obj : mObjects) {
         obj.second->draw();
     }
+    mMainWindow->updateScore(_pawn->score);
 
     //Calculate framerate before
     // checkForGLerrors() because that call takes a long time
@@ -387,6 +390,7 @@ void RenderWindow::MoveByInput(VisualObject* obj) {
 
     _movVec.normalize();
     _movVec /= mRenderTimer->interval();
+    _movVec *= _pawn->speed;
     obj->move(_movVec.x(), _movVec.y(), _movVec.z());
 
     mCamera.translate(_movVec.x(), _movVec.y(), _movVec.z());
@@ -425,12 +429,12 @@ void RenderWindow::RotateByInput(VisualObject* obj) {
 
         case Qt::Key_Q:
             bRotating = true;
-            rotVec -= yrot;
+            rotVec += yrot;
             break;
 
         case Qt::Key_E:
             bRotating = true;
-            rotVec += yrot;
+            rotVec -= yrot;
             break;
 
         default:
@@ -441,8 +445,8 @@ void RenderWindow::RotateByInput(VisualObject* obj) {
     rotVec.normalize();
 
     if (bRotating) {
-        obj->rotate(1.f, rotVec.x(), rotVec.y(), rotVec.z());
-        mCamera.rotate(QVector4D{1.f, rotVec.x(), rotVec.y(), rotVec.z()}, _pawn->position());
+        obj->rotate(_pawn->turningSpeed, rotVec.x(), rotVec.y(), rotVec.z());
+        mCamera.rotate(QVector4D{_pawn->turningSpeed, rotVec.x(), rotVec.y(), rotVec.z()}, _pawn->position());
         mCamera.lookAt(_pawn->position(), yrot);
     }
 }
