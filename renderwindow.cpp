@@ -23,6 +23,7 @@
 #include "curve.h"
 #include "points.h"
 #include "pawn.h"
+#include "cube.h"
 
 
 RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
@@ -58,6 +59,8 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
     mObjects["Pawn"] = new Pawn{};
     mObjects["Disc"] = new Disc{true};
+
+    mObjects["Cube"] = new Cube{};
 }
 
 RenderWindow::~RenderWindow() {
