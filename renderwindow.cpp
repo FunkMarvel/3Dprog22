@@ -157,9 +157,21 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     }
 
     auto npc = reinterpret_cast<NPC*>(mObjects["NPC"]);
-    qDebug() << "Added path\n";
-    npc->addPath("cubic", new Curve{"../3Dprog22/datafiles/cubic.dat"});
-    qDebug() << "Added path\n";
+
+    Curve* path = new Curve{"../3Dprog22/datafiles/cubic.dat"};
+
+    path->rotate(90, 0, 1, 0);
+    path->move(10, 0, 2);
+
+    npc->addPath("cubic", path);
+
+    path = new Curve{"../3Dprog22/datafiles/bestFit.dat"};
+
+    path->move(10, 0, 2);
+    path->rotate(45, 0, 1, 0);
+
+    npc->addPath("bestFit", path);
+
 
 //    mObjects["XYZ"]->move(-8, -7, 0);
     glBindVertexArray(0); //unbinds any VertexArray - good practice
@@ -224,7 +236,8 @@ void RenderWindow::render() {
     _pawn->collisionChecker(mObjects);
     qDebug() << "player: " << _pawn->position() << " | " << mCamera.eyePos() << "\n";
 
-    mObjects["NPC"]->move(dt);
+    dt += 1.0f / mRenderTimer->interval();
+    mObjects["NPC"]->move(0.5f * std::sin(dt/(M_2_PI * 10)) + 0.5f);
     for (const auto& obj : mObjects) {
         obj.second->draw();
     }
@@ -366,11 +379,9 @@ void RenderWindow::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Escape) {
         mMainWindow->close(); //Shuts down the whole program
     }
-    else if (Plane_render && event->key() == Qt::Key_1) {
-        drawNormals = !drawNormals;
-
-        auto trSurf = reinterpret_cast<TriangleSurface*>(mObjects["Surface"]);
-        trSurf->drawUnitNormals(drawNormals);
+    else if (event->key() == Qt::Key_1) {
+        auto npc = reinterpret_cast<NPC*>(mObjects["NPC"]);
+        npc->switchToNextPath();
     }
     else if (event->key() == Qt::Key_Space && mObjects.find("Pawn") != mObjects.end()) {
         Pawn* pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
