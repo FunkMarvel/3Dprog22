@@ -1,3 +1,4 @@
+#include "Door.h"
 #include "octahedronball.h"
 #include "pawn.h"
 #include "points.h"
@@ -60,6 +61,16 @@ void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *>& obj
             }
 
 
+            continue;
+        }
+
+        if(obj.first == "Door"){
+            auto door = reinterpret_cast<Door*>(obj.second);
+            if(_collider.hitCheck(door->_collider)){
+               door->DoorIsOpen = true;
+
+            }
+            else door->DoorIsOpen = false;
             continue;
         }
 

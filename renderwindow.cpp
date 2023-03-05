@@ -162,9 +162,9 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mCamera.translate(0, 10, -10);
     mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
 
-    mObjects["Cube"]->move(0,5,0);
-    mObjects["Door"]->move(0,5,0);
-    mObjects["NPC"]->move(10, 1, 3);
+    mObjects["Cube"]->move(0,5,20);
+    mObjects["Door"]->move(0,5,20);
+    mObjects["NPC"]->move(10, 1, 15);
 }
 
 // Called each frame - doing the rendering!!!
@@ -191,6 +191,7 @@ void RenderWindow::render() {
 
     //Moveing camera
     mCamera.update();
+
 
     _pawn->collisionChecker(mObjects);
     qDebug() << "player: " << _pawn->position() << "\n";
@@ -221,6 +222,8 @@ void RenderWindow::render() {
     //        mVmatrix->rotate(2.f, 0.f, 1.0, 0.f);
 
     //    }
+
+        ChangeCamera();
 }
 
 //This function is called from Qt when window is exposed (shown)
@@ -345,6 +348,9 @@ void RenderWindow::keyPressEvent(QKeyEvent* event) {
         Pawn* pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
         pawn->velocity = QVector3D{0.f, std::sqrt(2.f*pawn->jumpHeight*_gravity), 0.f};
     }
+    else if(event->key() == Qt::Key_F){
+
+    }
 }
 
 void RenderWindow::keyReleaseEvent(QKeyEvent* event) {
@@ -395,9 +401,9 @@ void RenderWindow::MoveByInput(VisualObject* obj) {
     _movVec /= mRenderTimer->interval();
     _movVec *= _pawn->speed;
     obj->move(_movVec.x(), _movVec.y(), _movVec.z());
-
     mCamera.translate(_movVec.x(), _movVec.y(), _movVec.z());
     mCamera.lookAt(_pawn->position(), QVector3D{0,1,0});
+
 }
 
 void RenderWindow::RotateByInput(VisualObject* obj) {
@@ -471,3 +477,21 @@ void RenderWindow::InitMoveKeys() {
     pressedKeys[Qt::Key_D] = false;
     pressedKeys[Qt::Key_A] = false;
 }
+
+void RenderWindow::ChangeCamera()
+{
+
+  qDebug() << "Change camera";
+     auto door = reinterpret_cast<Door*>(mObjects["Door"]);
+     if(door->DoorIsOpen == true){
+
+   // mCamera.rotate(QVector4D(5,5,10,1),QVector3D(_pawn->position()));
+
+    mCamera.init(mPmatrixUniform, mVmatrixUniform);
+    mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
+    mCamera.setPosition(QVector3D(-7,10,25));
+    mCamera.lookAt(_pawn->position(), QVector3D{0, 1, 0});
+}
+     }
+
+

@@ -1,4 +1,5 @@
 #include "points.h"
+#include "spherecollider.h"
 #include <fstream>
 
 Points::Points()

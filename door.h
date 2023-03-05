@@ -1,6 +1,7 @@
 #ifndef DOOR_H
 #define DOOR_H
 
+#include "spherecollider.h"
 #include "visualobject.h"
 
 class Door : public VisualObject
@@ -11,7 +12,12 @@ public:
     void draw() override;
     void rotate(QMatrix4x4 matrix);
 
-   // virtual void onOverlap(const QVector3D& hitPos) override;
+    virtual void onOverlap();
+
+    physics::SphereCollider _collider;
+    bool DoorIsOpen = false;
 };
+
+
 
 #endif // DOOR_H
