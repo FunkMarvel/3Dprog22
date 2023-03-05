@@ -206,10 +206,11 @@ void RenderWindow::render() {
     glUseProgram(mShaderProgram->getProgram());
 
     MoveByInput(_pawn);
+    RotateByInput(_pawn);
 
-    if(!Cube::ContainsPoint(_pawn->position())){
-        RotateByInput(_pawn);
-    }
+//    if(!Cube::ContainsPoint(_pawn->position())){
+//        RotateByInput(_pawn);
+//    }
 
     if(Cube::ContainsPoint(_pawn->position()) && !Cube::ContainsPoint(_pawn->getLastPos())){
         qDebug() << "Enter house";
