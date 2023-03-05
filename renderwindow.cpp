@@ -172,7 +172,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     path = new Curve{"../3Dprog22/datafiles/bestFit.dat"};
 
     path->move(10, 0, 2);
-    path->rotate(45, 0, 1, 0);
+    path->rotate(-45, 0, 1, 0);
 
     npc->addPath("bestFit", path);
 
