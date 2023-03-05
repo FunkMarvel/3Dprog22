@@ -172,6 +172,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mObjects["Door"]->move(0,5,20);
 
     mObjects["Disc"]->move(7,5,29);
+}
 
 // Called each frame - doing the rendering!!!
 void RenderWindow::render() {
