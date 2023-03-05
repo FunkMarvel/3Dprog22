@@ -112,4 +112,11 @@ void Cube::rotate(QMatrix4x4 matrix) {
     mMatrix = matrix;
 }
 
+bool Cube::ContainsPoint(QVector3D Point)
+{
+   return (Point.x() <= 10 && Point.x() >= -10 &&
+    Point.y() <= 10 && Point.y() >= -0 &&
+    Point.z() <= 30 && Point.z() >= 15);
+}
+
 

@@ -9,7 +9,8 @@ public:
     void init(GLint matrixUniform) override;
     void draw() override;
     void rotate(QMatrix4x4 matrix);
-
+    static bool ContainsPoint(QVector3D Point);
  };
+
 
 #endif // CUBE_H

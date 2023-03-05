@@ -27,12 +27,15 @@ void Pawn::draw()
 void Pawn::move(float x, float y, float z)
 {
     QVector4D moveVec{x,y,z, 1};
+    _lastPos = mPosition;
     moveVec = mRotation * moveVec;
     mPosition += moveVec;
     _collider.setPosition(position());
     for (const auto& component : _visualComponents) {
         component.second->move(moveVec.x(), moveVec.y(), moveVec.z());
     }
+
+
 }
 
 void Pawn::rotate(float l, float r, float u, float d)
@@ -43,9 +46,36 @@ void Pawn::rotate(float l, float r, float u, float d)
     }
 }
 
+QVector3D Pawn::rotatePoint(QVector3D Point)
+{
+    QVector4D TempPoint{Point.x(),Point.y(),Point.z(),1};
+    QMatrix4x4 tempMat;
+
+    tempMat.setToIdentity();
+
+    tempMat.translate(-Point);
+
+    TempPoint = tempMat * TempPoint;
+
+    tempMat.setToIdentity();
+
+    TempPoint = mRotation * TempPoint;
+
+    tempMat.translate(Point);
+
+    TempPoint = tempMat * TempPoint;
+
+    return QVector3D{TempPoint.x(),TempPoint.y(),TempPoint.z()};
+}
+
 float Pawn::getRadius() const
 {
     return 1.f;
+}
+
+QVector3D Pawn::getLastPos() const
+{
+    return QVector3D{_lastPos.x(),_lastPos.y(),_lastPos.z()};
 }
 
 void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *>& objectsToCheck)
@@ -63,14 +93,14 @@ void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *>& obj
 
             continue;
         }
-
         if(obj.first == "Door"){
-            auto door = reinterpret_cast<Door*>(obj.second);
+
+        auto door = reinterpret_cast<Door*>(obj.second);
             if(_collider.hitCheck(door->_collider)){
-               door->DoorIsOpen = true;
+            InRangeForDoor = true;
 
             }
-            else door->DoorIsOpen = false;
+            else InRangeForDoor = false;
             continue;
         }
 

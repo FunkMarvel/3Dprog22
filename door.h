@@ -16,6 +16,7 @@ public:
 
     physics::SphereCollider _collider;
     bool DoorIsOpen = false;
+
 };
 
 
