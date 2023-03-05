@@ -378,7 +378,10 @@ void RenderWindow::keyPressEvent(QKeyEvent* event) {
     }
     else if(event->key() == Qt::Key_F && _pawn->InRangeForDoor){
         auto door = reinterpret_cast<Door*>(mObjects["Door"]);
-       door->DoorIsOpen = true;
+       if(!door->DoorIsOpen)
+        door->DoorIsOpen = true;
+       else
+        door->DoorIsOpen = false;
     }
 }
 

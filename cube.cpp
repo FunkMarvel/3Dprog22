@@ -3,69 +3,69 @@
 Cube::Cube() {
 
     //Furthest Back of building in Z
-    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 1});
-    mVertices.push_back(Vertex{10.0, -5.0, 10.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 1, 0, 0});
-     mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 1});
-     mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0, 1, 0});
-     mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 1, 0, 0});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0.7, 0.7});
+    mVertices.push_back(Vertex{10.0, -5.0, 10.0, 0, 0.7, 0.7});
+    mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0, 0.7, 0.7});
+     mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0.7, 0.7});
+     mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0,0.7, 0.7});
+     mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0.7, 0.7});
 
     //Left wall of the building
-    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0, 1});
-    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 0, 1});
+    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0,0.6, 0.6});
     //Floor if needed
-    mVertices.push_back(Vertex{10.0, -4.9, 10.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-10.0, -4.9, -5.0, 0, 1, 0});
-    mVertices.push_back(Vertex{10.0, -4.9, -5.0, 0, 0, 1});
-    mVertices.push_back(Vertex{10.0, -4.9, 10.0, 0, 0, 1});
-    mVertices.push_back(Vertex{-10.0, -4.9, 10.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-10.0, -4.9, -5.0, 1, 0, 0});
+    mVertices.push_back(Vertex{10.0, -4.9, 10.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{-10.0, -4.9, -5.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{10.0, -4.9, -5.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{10.0, -4.9, 10.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{-10.0, -4.9, 10.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{-10.0, -4.9, -5.0, 0, 0.5, 0.5});
 
     //Right side of the house
-    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 1});
-    mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 1, 0});
-    mVertices.push_back(Vertex{10.0, 5.0, -5.0, 1, 0, 0});
-    mVertices.push_back(Vertex{10.0, -5.0, -5.0, 1, 0, 0});
-    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 1, 0});
-    mVertices.push_back(Vertex{10.0, -5.0, 10.0, 0, 0, 1});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0.4, 0.4});
+    mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 0.4, 0.4});
+    mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0.4, 0.4});
+    mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 0.4, 0.4});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0.4,0.4});
+    mVertices.push_back(Vertex{10.0, -5.0, 10.0, 0, 0.4, 0.4});
 
         // Roof/top plane
-    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 1});
-    mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 1, 0, 0});
-    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0, 1});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 0});
+    mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 0, 0});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0,0, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0, 0});
 
     //Left of door, front
-    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-1.2, -5.0, -5.0, 0, 0, 1});
-    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 1, 0, 0});
-    mVertices.push_back(Vertex{-1.2, 5.0, -5.0, 0, 1, 0});
-    mVertices.push_back(Vertex{-1.2, -5.0, -5.0, 0, 0, 1});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-1.2, -5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-1.2, 5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-1.2, -5.0, -5.0, 0, 0.3, 0.3});
 
 
     //Right of door , front
-   mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0, 1});
-   mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 1, 0});
-   mVertices.push_back(Vertex{1.2, -5.0, -5.0, 1, 0, 0});
-   mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0, 1});
-   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 0, 1, 0});
-   mVertices.push_back(Vertex{1.2, -5.0, -5.0, 1, 0, 0});
+   mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0, 0.3, 0.3});
 
 
    //Above door , front
-   mVertices.push_back(Vertex{-1.2, 5.0, -5.0, 0, 0, 1});
-   mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0, 1, 0});
-   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 1, 0, 0});
-   mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0, 0, 1});
-   mVertices.push_back(Vertex{1.2, 0.1,-5.0, 0, 1, 0});
-   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 1, 0, 0});
+   mVertices.push_back(Vertex{-1.2, 5.0, -5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{1.2, 0.1,-5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 0, 0.2, 0.2});
 
 
 
