@@ -34,3 +34,8 @@ void VisualObject::onOverlap(const QVector3D &hitPos)
 {
 
 }
+
+QMatrix4x4 VisualObject::rotation() const
+{
+    return mRotation;
+}

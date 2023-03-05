@@ -26,6 +26,8 @@ public:
         return QVector3D{mPosition.x(), mPosition.y(), mPosition.z()};
     }
 
+    QMatrix4x4 rotation() const;
+
 protected:
     std::vector<Vertex> mVertices;
     GLuint mVAO{0};
