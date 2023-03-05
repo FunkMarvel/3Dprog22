@@ -514,7 +514,7 @@ void RenderWindow::ChangeCamera()
 
     mCamera.init(mPmatrixUniform, mVmatrixUniform);
     mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
-    mCamera.setPosition(QVector3D(-7,10,25));
+    mCamera.setPosition(QVector3D(-7,8.f,25));
     mCamera.lookAt(_pawn->position(), QVector3D{0, 1, 0});
 }
 

@@ -34,12 +34,12 @@ Cube::Cube() {
     mVertices.push_back(Vertex{10.0, -5.0, 10.0, 0, 0, 1});
 
         // Roof/top plane
-    //mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 1});
-    //mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 1, 0});
-    //mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 1, 0, 0});
-    //mVertices.push_back(Vertex{10.0, 5.0, 10.0, 1, 0, 0});
-    //mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 1, 0});
-    //mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0, 1});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 1});
+    mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 1, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 1, 0, 0});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 1, 0, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 1, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0, 1});
 
     //Left of door, front
     mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 1, 0, 0});

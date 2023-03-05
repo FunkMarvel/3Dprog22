@@ -4,7 +4,7 @@
 Door::Door()
 {
 
-    _collider = physics::SphereCollider{0.25f};
+    _collider = physics::SphereCollider{1.f};
     _collider.setPosition(QVector3D(0,0.1,15));
 
     //DOOOR
