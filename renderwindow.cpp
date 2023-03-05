@@ -61,6 +61,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
     mObjects["Pawn"] = new Pawn{};
     mObjects["NPC"] = new NPC{};
+
 //    mObjects["Disc"] = new Disc{true};
 
     mObjects["Door"] = new Door{};
@@ -155,6 +156,11 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
         object.second->move(0.f, -_pawn->getRadius(), 0.f);
     }
 
+    auto npc = reinterpret_cast<NPC*>(mObjects["NPC"]);
+    qDebug() << "Added path\n";
+    npc->addPath("cubic", new Curve{"../3Dprog22/datafiles/cubic.dat"});
+    qDebug() << "Added path\n";
+
 //    mObjects["XYZ"]->move(-8, -7, 0);
     glBindVertexArray(0); //unbinds any VertexArray - good practice
     mCamera.init(mPmatrixUniform, mVmatrixUniform);
@@ -164,7 +170,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 
     mObjects["Cube"]->move(0,5,20);
     mObjects["Door"]->move(0,5,20);
-    mObjects["NPC"]->move(10, 1, 15);
+//    mObjects["NPC"]->move(10, 1, 15);
 }
 
 // Called each frame - doing the rendering!!!
@@ -196,6 +202,7 @@ void RenderWindow::render() {
     _pawn->collisionChecker(mObjects);
     qDebug() << "player: " << _pawn->position() << "\n";
 
+    mObjects["NPC"]->move(dt);
     for (const auto& obj : mObjects) {
         obj.second->draw();
     }
