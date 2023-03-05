@@ -1,8 +1,10 @@
 #include "door.h"
+#include "spherecollider.h"
 
 Door::Door()
 {
 
+    _collider = physics::SphereCollider{0.25f};
    //DOOOR
    mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
    mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
@@ -53,11 +55,11 @@ void Door::rotate(QMatrix4x4 matrix) {
     mMatrix = matrix;
 }
 
-/*
-void Door::onOverlap(const QVector3D& hitPos)
+
+void Door::onOverlap()
 {
 
-  qDebug() << "Overlap with door";
+  qDebug() << "Overlap with door!!!!!!!!!!!!!!!!!!!";
 
    //mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
    //mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
@@ -66,4 +68,4 @@ void Door::onOverlap(const QVector3D& hitPos)
    //mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0.4, 0.2, 0.1});
    //mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
 }
-*/
+
