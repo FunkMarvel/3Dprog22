@@ -5,7 +5,10 @@ Door::Door()
 {
 
     _collider = physics::SphereCollider{0.25f};
-   //DOOOR
+    _collider.setPosition(QVector3D(0,0.1,15));
+
+    //DOOOR
+
    mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
    mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
    mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
@@ -61,11 +64,14 @@ void Door::onOverlap()
 
   qDebug() << "Overlap with door!!!!!!!!!!!!!!!!!!!";
 
-   //mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
-   //mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
-   //mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
-   //mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
-   //mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0.4, 0.2, 0.1});
-   //mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
+  mVertices.push_back(Vertex{-1.2, 0.1, -10.0, 0.4, 0.2, 0.1});
+  mVertices.push_back(Vertex{-1.2, -5.0, -10.0,0.4, 0.2, 0.1});
+  mVertices.push_back(Vertex{1.2, 0.1, -10.0,0.4, 0.2, 0.1});
+  mVertices.push_back(Vertex{-1.2, -5.0, -10.0,0.4, 0.2, 0.1});
+  mVertices.push_back(Vertex{1.2, -5.0, -10.0, 0.4, 0.2, 0.1});
+  mVertices.push_back(Vertex{1.2, 0.1, -10.0,0.4, 0.2, 0.1});
+
+   init(mMatrixUniform);
+
 }
 

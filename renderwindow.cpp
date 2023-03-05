@@ -162,9 +162,9 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mCamera.translate(0, 10, -10);
     mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
 
-    mObjects["Cube"]->move(0,5,0);
-    mObjects["Door"]->move(0,5,0);
-    mObjects["NPC"]->move(10, 1, 3);
+    mObjects["Cube"]->move(0,5,20);
+    mObjects["Door"]->move(0,5,20);
+    mObjects["NPC"]->move(10, 1, 15);
 }
 
 // Called each frame - doing the rendering!!!
