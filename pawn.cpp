@@ -53,7 +53,7 @@ QVector3D Pawn::rotatePoint(QVector3D Point)
 
     tempMat.setToIdentity();
 
-    tempMat.translate(-Point);
+    tempMat.translate(-position());
 
     TempPoint = tempMat * TempPoint;
 
@@ -61,7 +61,7 @@ QVector3D Pawn::rotatePoint(QVector3D Point)
 
     TempPoint = mRotation * TempPoint;
 
-    tempMat.translate(Point);
+    tempMat.translate(position());
 
     TempPoint = tempMat * TempPoint;
 
