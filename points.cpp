@@ -68,10 +68,12 @@ void Points::init(GLint matrixUniform) {
 void Points::onOverlap(const QVector3D &hitPos)
 {
     size_t vertIdx = static_cast<size_t>(hitPos[0]);
-    if (vertIdx >= mVertices.size()) throw std::range_error("out of range");
+    if (mVertices.empty()) return;
+    if (vertIdx >= mVertices.size()) throw std::range_error("out of range points.cpp");
 
     mVertices[vertIdx] = mVertices.back();
     mVertices.pop_back();
+    bEmpty = mVertices.empty();
     init(mMatrixUniform);
 }
 
