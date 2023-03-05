@@ -49,10 +49,6 @@ void NPC::init(GLint matrixUniform)
 
 void NPC::draw()
 {
-    if (!_paths.empty()) {
-        _paths[_currentPath]  ;
-    }
-
     Tetrahedron::draw();
 
     if (!_bDrawPaths || _paths.empty()) return;
@@ -63,4 +59,12 @@ void NPC::draw()
 void NPC::onOverlap(const QVector3D &hitPos)
 {
 
+}
+
+void NPC::move(float dt)
+{
+    interpVal += dt;
+    interpVal = std::sin(interpVal);
+    auto posDelta = (_paths[_currentPath]->getPoint(interpVal) - position());
+    Tetrahedron::move(posDelta.x(),posDelta.y(),posDelta.z());
 }

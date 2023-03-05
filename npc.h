@@ -24,11 +24,14 @@ private:
     std::string _currentPath;
     bool _bDrawPaths{false};
 
+    float interpVal{};
+
     // VisualObject interface
 public:
     void init(GLint matrixUniform) override;
     void draw() override;
     void onOverlap(const QVector3D &hitPos) override;
+    void move(float dt) override;
 };
 
 #endif // NPC_H
