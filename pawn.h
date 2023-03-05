@@ -23,6 +23,7 @@ public:
     void draw() override;
     void move(float x, float y, float z) override;
     void rotate(float l, float r, float u, float d) override;
+    void setRotation(float l, float r, float u, float d);
 
     float getRadius() const;
 
