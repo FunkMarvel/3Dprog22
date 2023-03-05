@@ -67,9 +67,10 @@ void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *>& obj
         if(obj.first == "Door"){
             auto door = reinterpret_cast<Door*>(obj.second);
             if(_collider.hitCheck(door->_collider)){
-               door->onOverlap();
+               door->DoorIsOpen = true;
 
             }
+            else door->DoorIsOpen = false;
             continue;
         }
 

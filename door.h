@@ -15,7 +15,7 @@ public:
     virtual void onOverlap();
 
     physics::SphereCollider _collider;
-
+    bool DoorIsOpen = false;
 };
 
 

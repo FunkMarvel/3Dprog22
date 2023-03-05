@@ -102,6 +102,7 @@ protected:
     void MoveByInput(class VisualObject*);
     void RotateByInput(class VisualObject*);
     void InitMoveKeys();
+    void ChangeCamera();
 };
 
 #endif // RENDERWINDOW_H

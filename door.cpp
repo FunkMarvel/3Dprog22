@@ -49,6 +49,36 @@ void Door::init(GLint matrixUniform) {
 }
 
 void Door::draw() {
+
+    if(DoorIsOpen){
+        qDebug() << "Overlap with door!!!!!!!!!!!!!!!!!!!";
+
+        mVertices.clear();
+
+        mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{-1.2, -5.0, -7.0,0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{-1.2, 0.1, -7.0,0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{-1.2, -5.0, -7.0,0.4, 0.2, 0.1});
+
+
+   init(mMatrixUniform);
+
+    }
+    else{
+
+        mVertices.clear();
+        mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{-1.2, -5.0, -5.0,0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0.4, 0.2, 0.1});
+        mVertices.push_back(Vertex{1.2, 0.1, -5.0,0.4, 0.2, 0.1});
+
+        init(mMatrixUniform);
+    }
+
     glBindVertexArray(mVAO);
     glUniformMatrix4fv(mMatrixUniform, 1, GL_FALSE, mMatrix.constData());
     glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
@@ -62,16 +92,6 @@ void Door::rotate(QMatrix4x4 matrix) {
 void Door::onOverlap()
 {
 
-  qDebug() << "Overlap with door!!!!!!!!!!!!!!!!!!!";
 
-  mVertices.push_back(Vertex{-1.2, 0.1, -10.0, 0.4, 0.2, 0.1});
-  mVertices.push_back(Vertex{-1.2, -5.0, -10.0,0.4, 0.2, 0.1});
-  mVertices.push_back(Vertex{1.2, 0.1, -10.0,0.4, 0.2, 0.1});
-  mVertices.push_back(Vertex{-1.2, -5.0, -10.0,0.4, 0.2, 0.1});
-  mVertices.push_back(Vertex{1.2, -5.0, -10.0, 0.4, 0.2, 0.1});
-  mVertices.push_back(Vertex{1.2, 0.1, -10.0,0.4, 0.2, 0.1});
-
-   init(mMatrixUniform);
 
 }
-
