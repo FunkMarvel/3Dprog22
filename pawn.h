@@ -14,6 +14,7 @@ public:
 private:
     std::unordered_map<std::string, VisualObject*> _visualComponents{};
     physics::SphereCollider _collider;
+    QVector4D _lastPos;
 //    Camera _camera{};
 
 
@@ -23,8 +24,9 @@ public:
     void draw() override;
     void move(float x, float y, float z) override;
     void rotate(float l, float r, float u, float d) override;
-
+    QVector3D rotatePoint(QVector3D Point);
     float getRadius() const;
+    QVector3D getLastPos() const;
 
     void collisionChecker(std::unordered_map<std::string, VisualObject*>& objectsToCheck);
 
@@ -32,6 +34,8 @@ public:
     float speed{4};
     float turningSpeed{2};
     float jumpHeight{1.5f};
+
+    bool InRangeForDoor{false};
 
     int score{};
 };

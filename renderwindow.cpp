@@ -56,7 +56,7 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
     mObjects["XYZ"] = new XYZ{};
 //    mObjects["Curve"] = new Curve{"../3Dprog22/datafiles/cubic.dat"};
     mObjects["Scatter"] = new Points{"../3Dprog22/datafiles/points.dat", 10};
-
+    mObjects["Disc"] = new Disc{1};
     mObjects["Surface"] = new TriangleSurface{"../3Dprog22/datafiles/vertices.dat"};
 
     mObjects["Pawn"] = new Pawn{};
@@ -165,6 +165,7 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mObjects["Cube"]->move(0,5,20);
     mObjects["Door"]->move(0,5,20);
     mObjects["NPC"]->move(10, 1, 15);
+    mObjects["Disc"]->move(7,5,29);
 }
 
 // Called each frame - doing the rendering!!!
@@ -187,7 +188,30 @@ void RenderWindow::render() {
     glUseProgram(mShaderProgram->getProgram());
 
     MoveByInput(_pawn);
+
+    if(!Cube::ContainsPoint(_pawn->position())){
     RotateByInput(_pawn);
+    }
+
+    if(Cube::ContainsPoint(_pawn->position()) && !Cube::ContainsPoint(_pawn->getLastPos())){
+
+     qDebug() << "Enter house";
+    cameraLastPos = mCamera.eyePos() - _pawn->position();
+    ChangeCamera();
+    }
+    else if(!Cube::ContainsPoint(_pawn->position())&& Cube::ContainsPoint(_pawn->getLastPos()))
+    {
+     qDebug() << "Exit house";
+    mCamera.init(mPmatrixUniform, mVmatrixUniform);
+    mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
+    mCamera.translate(0,10,-10);
+
+    auto NewPos = _pawn->rotatePoint(mCamera.eyePos());
+
+    mCamera.setPosition(NewPos);
+
+    mCamera.lookAt(_pawn->position(), QVector3D{0, 1, 0});
+    }
 
     //Moveing camera
     mCamera.update();
@@ -223,7 +247,6 @@ void RenderWindow::render() {
 
     //    }
 
-        ChangeCamera();
 }
 
 //This function is called from Qt when window is exposed (shown)
@@ -348,8 +371,9 @@ void RenderWindow::keyPressEvent(QKeyEvent* event) {
         Pawn* pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
         pawn->velocity = QVector3D{0.f, std::sqrt(2.f*pawn->jumpHeight*_gravity), 0.f};
     }
-    else if(event->key() == Qt::Key_F){
-
+    else if(event->key() == Qt::Key_F && _pawn->InRangeForDoor){
+        auto door = reinterpret_cast<Door*>(mObjects["Door"]);
+       door->DoorIsOpen = true;
     }
 }
 
@@ -481,17 +505,13 @@ void RenderWindow::InitMoveKeys() {
 void RenderWindow::ChangeCamera()
 {
 
-  qDebug() << "Change camera";
-     auto door = reinterpret_cast<Door*>(mObjects["Door"]);
-     if(door->DoorIsOpen == true){
 
-   // mCamera.rotate(QVector4D(5,5,10,1),QVector3D(_pawn->position()));
 
     mCamera.init(mPmatrixUniform, mVmatrixUniform);
     mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
     mCamera.setPosition(QVector3D(-7,10,25));
     mCamera.lookAt(_pawn->position(), QVector3D{0, 1, 0});
 }
-     }
+
 
 
