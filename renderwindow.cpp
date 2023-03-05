@@ -196,27 +196,25 @@ void RenderWindow::render() {
     MoveByInput(_pawn);
 
     if(!Cube::ContainsPoint(_pawn->position())){
-    RotateByInput(_pawn);
+        RotateByInput(_pawn);
     }
 
     if(Cube::ContainsPoint(_pawn->position()) && !Cube::ContainsPoint(_pawn->getLastPos())){
-
-     qDebug() << "Enter house";
-    cameraLastPos = mCamera.eyePos() - _pawn->position();
-    ChangeCamera();
+        qDebug() << "Enter house";
+        ChangeCamera();
     }
-    else if(!Cube::ContainsPoint(_pawn->position())&& Cube::ContainsPoint(_pawn->getLastPos()))
+    if(!Cube::ContainsPoint(_pawn->position()) && Cube::ContainsPoint(_pawn->getLastPos()))
     {
-     qDebug() << "Exit house";
-    mCamera.init(mPmatrixUniform, mVmatrixUniform);
-    mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
-    mCamera.translate(0,10,-10);
+        qDebug() << "Exit house";
+        mCamera.init(mPmatrixUniform, mVmatrixUniform);
+        mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
+        mCamera.setPosition(_pawn->position() + QVector3D{0,10,-10});
 
-    auto NewPos = _pawn->rotatePoint(mCamera.eyePos());
+        mCamera.rotate(_pawn->rotation(), _pawn->position());
 
-    mCamera.setPosition(NewPos);
-
-    mCamera.lookAt(_pawn->position(), QVector3D{0, 1, 0});
+        mCamera.lookAt(_pawn->position(), QVector3D{0, 1, 0});
+    } else if (Cube::ContainsPoint(_pawn->position())) {
+        ChangeCamera();
     }
 
     //Moveing camera
@@ -224,7 +222,7 @@ void RenderWindow::render() {
 
 
     _pawn->collisionChecker(mObjects);
-    qDebug() << "player: " << _pawn->position() << "\n";
+    qDebug() << "player: " << _pawn->position() << " | " << mCamera.eyePos() << "\n";
 
     mObjects["NPC"]->move(dt);
     for (const auto& obj : mObjects) {
@@ -431,8 +429,8 @@ void RenderWindow::MoveByInput(VisualObject* obj) {
     _movVec.normalize();
     _movVec /= mRenderTimer->interval();
     _movVec *= _pawn->speed;
-    obj->move(_movVec.x(), _movVec.y(), _movVec.z());
-    mCamera.translate(_movVec.x(), _movVec.y(), _movVec.z());
+    _pawn->move(_movVec.x(), _movVec.y(), _movVec.z());
+    mCamera.translate(_movVec);
     mCamera.lookAt(_pawn->position(), QVector3D{0,1,0});
 
 }
