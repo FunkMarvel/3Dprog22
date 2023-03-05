@@ -14,6 +14,7 @@
 
 #include "disc.h"
 #include "npc.h"
+#include "octahedronball.h"
 #include "visualobject.h"
 #include "xyz.h"
 #include "shader.h"
@@ -58,6 +59,9 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
     mObjects["Scatter"] = new Points{"../3Dprog22/datafiles/points.dat", 10};
     mObjects["Disc"] = new Disc{1};
     mObjects["Surface"] = new TriangleSurface{"../3Dprog22/datafiles/vertices.dat"};
+
+    mObjects["Octahedronball"] = new OctahedronBall{};
+
 
     mObjects["Pawn"] = new Pawn{};
     mObjects["NPC"] = new NPC{};
@@ -170,8 +174,8 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
 
     mObjects["Cube"]->move(0,5,20);
     mObjects["Door"]->move(0,5,20);
-
-    mObjects["Disc"]->move(7,5,29);
+    mObjects["Octahedronball"]->move(7,1,26);
+    mObjects["Disc"]->move(0,5,29.8);
 }
 
 // Called each frame - doing the rendering!!!
