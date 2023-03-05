@@ -388,6 +388,11 @@ void RenderWindow::keyPressEvent(QKeyEvent* event) {
         auto npc = reinterpret_cast<NPC*>(mObjects["NPC"]);
         npc->switchToNextPath();
     }
+    else if (event->key() == Qt::Key_2) {
+        auto npc = reinterpret_cast<NPC*>(mObjects["NPC"]);
+        drawNormals = !drawNormals;
+        npc->drawPath(drawNormals);
+    }
     else if (event->key() == Qt::Key_Space && mObjects.find("Pawn") != mObjects.end()) {
         Pawn* pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
         pawn->velocity = QVector3D{0.f, std::sqrt(2.f*pawn->jumpHeight*_gravity), 0.f};
