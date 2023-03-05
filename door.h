@@ -10,9 +10,8 @@ public:
     Door();
     void init(GLint matrixUniform) override;
     void draw() override;
-    void rotate(QMatrix4x4 matrix);
 
-    virtual void onOverlap();
+    virtual void onOverlap(const QVector3D& pos) override;
 
     physics::SphereCollider _collider;
     bool DoorIsOpen = false;

@@ -63,7 +63,7 @@ void Door::draw() {
         mVertices.push_back(Vertex{-1.2, -5.0, -7.0,0.4, 0.2, 0.1});
 
 
-   init(mMatrixUniform);
+        init(mMatrixUniform);
 
     }
     else{
@@ -84,12 +84,8 @@ void Door::draw() {
     glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
 }
 
-void Door::rotate(QMatrix4x4 matrix) {
-    mMatrix = matrix;
-}
 
-
-void Door::onOverlap()
+void Door::onOverlap(const QVector3D& pos)
 {
 
 
