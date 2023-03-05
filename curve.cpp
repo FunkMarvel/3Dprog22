@@ -57,5 +57,8 @@ QVector3D Curve::getPoint(float t)
     else if (idx < 0) idx = 0;
 
     auto vertex = mVertices[idx];
-    return QVector3D{vertex[0], vertex[1], vertex[2]};
+    auto pos = QVector4D{vertex[0], vertex[1], vertex[2], 1};
+    pos = mMatrix * pos;
+
+    return QVector3D{pos.x(), pos.y(), pos.z()};
 }
