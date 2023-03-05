@@ -22,6 +22,7 @@ public:
 private:
     std::map<std::string, class Curve*> _paths;
     std::string _currentPath;
+
     bool _bDrawPaths{false};
 
     float interpVal{};
@@ -32,6 +33,9 @@ public:
     void draw() override;
     void onOverlap(const QVector3D &hitPos) override;
     void move(float dt) override;
+
+    class Curve* getPath();
+    class Curve* getPath(std::string pathName);
 };
 
 #endif // NPC_H
