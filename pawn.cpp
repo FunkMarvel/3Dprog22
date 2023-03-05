@@ -85,7 +85,7 @@ void Pawn::collisionChecker(std::unordered_map<std::string, VisualObject *>& obj
             auto scatter = reinterpret_cast<Points*>(obj.second);
             auto closestPoint = scatter->getClosestPoint(position());
 
-            if (_collider.hitCheck(closestPoint)) {
+            if (_collider.hitCheck(closestPoint) && !scatter->bEmpty) {
                 scatter->onOverlap(QVector3D{closestPoint.w(), 0, 0});
                 score++;
             }
