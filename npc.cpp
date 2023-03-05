@@ -50,7 +50,7 @@ void NPC::init(GLint matrixUniform)
 void NPC::draw()
 {
     if (!_paths.empty()) {
-
+        _paths[_currentPath]  ;
     }
 
     Tetrahedron::draw();
