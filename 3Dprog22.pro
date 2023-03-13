@@ -10,14 +10,17 @@ SOURCES += main.cpp \
     cube.cpp \
     curve.cpp \
     disc.cpp \
+    door.cpp \
     linesegment.cpp \
     logger.cpp \
     mainwindow.cpp \
+    npc.cpp \
     octahedronball.cpp \
     pawn.cpp \
     points.cpp \
     renderwindow.cpp \
     shader.cpp \
+    spherecollider.cpp \
     tetrahedron.cpp \
     trianglesurface.cpp \
     vertex.cpp \
@@ -366,14 +369,17 @@ HEADERS += \
     cube.h \
     curve.h \
     disc.h \
+    door.h \
     linesegment.h \
     logger.h \
     mainwindow.h \
+    npc.h \
     octahedronball.h \
     pawn.h \
     points.h \
     renderwindow.h \
     shader.h \
+    spherecollider.h \
     tetrahedron.h \
     trianglesurface.h \
     vertex.h \
@@ -384,5 +390,12 @@ FORMS += \
     mainwindow.ui
 
 DISTFILES += \
+    datafiles/bestFit.dat \
+    datafiles/cubic.dat \
+    datafiles/curve.dat \
+    datafiles/lissajous.dat \
+    datafiles/points.dat \
+    datafiles/points2.dat \
+    datafiles/vertices.dat \
     plainshader.frag \
     plainshader.vert

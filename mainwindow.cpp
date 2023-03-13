@@ -19,6 +19,11 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+void MainWindow::updateScore(int score)
+{
+    ui->scoreCounter->display(score);
+}
+
 void MainWindow::init() {
     //This will contain the setup of the OpenGL surface we will render into
     QSurfaceFormat format;
@@ -73,61 +78,61 @@ void MainWindow::init() {
 }
 
 //Example of a slot called from the button on the top of the program.
-void MainWindow::on_rotationButton_toggled(bool checked) {
-    if (checked) {
-        mRenderWindow->mRotate = true;
-        ui->rotationButton->setText("Stop rotation");
-    }
-    else {
-        mRenderWindow->mRotate = false;
-        ui->rotationButton->setText("Start rotation");
-    }
-}
+//void MainWindow::on_rotationButton_toggled(bool checked) {
+//    if (checked) {
+//        mRenderWindow->mRotate = true;
+//        ui->rotationButton->setText("Stop rotation");
+//    }
+//    else {
+//        mRenderWindow->mRotate = false;
+//        ui->rotationButton->setText("Start rotation");
+//    }
+//}
 
-void MainWindow::on_XYZButton_toggled(bool checked) {
-    if (checked) {
-        mRenderWindow->XYZ_render = true;
-        ui->XYZButton->setText("stop rendering XYC");
-    }
-    else {
-        mRenderWindow->XYZ_render = false;
-        ui->XYZButton->setText("Render XYC");
-    }
-}
+//void MainWindow::on_XYZButton_toggled(bool checked) {
+//    if (checked) {
+//        mRenderWindow->XYZ_render = true;
+//        ui->XYZButton->setText("stop rendering XYC");
+//    }
+//    else {
+//        mRenderWindow->XYZ_render = false;
+//        ui->XYZButton->setText("Render XYC");
+//    }
+//}
 
 
-void MainWindow::on_CurveButton_toggled(bool checked) {
-    if (checked) {
-        mRenderWindow->Curve_render = true;
-        ui->CurveButton->setText("Stop rendering Curve");
-    }
-    else {
-        mRenderWindow->Curve_render = false;
-        ui->CurveButton->setText("Render Curve");
-    }
-}
+//void MainWindow::on_CurveButton_toggled(bool checked) {
+//    if (checked) {
+//        mRenderWindow->Curve_render = true;
+//        ui->CurveButton->setText("Stop rendering Curve");
+//    }
+//    else {
+//        mRenderWindow->Curve_render = false;
+//        ui->CurveButton->setText("Render Curve");
+//    }
+//}
 
-void MainWindow::on_Triangle_toggled(bool checked) {
-    if (checked) {
-        mRenderWindow->Plane_render = true;
-        ui->Triangle->setText("Stop rendering surface");
-    }
-    else {
-        mRenderWindow->Plane_render = false;
-        ui->Triangle->setText("Render surface");
-    }
-}
+//void MainWindow::on_Triangle_toggled(bool checked) {
+//    if (checked) {
+//        mRenderWindow->Plane_render = true;
+//        ui->Triangle->setText("Stop rendering surface");
+//    }
+//    else {
+//        mRenderWindow->Plane_render = false;
+//        ui->Triangle->setText("Render surface");
+//    }
+//}
 
-void MainWindow::on_Cube_toggled(bool checked) {
-    if (checked) {
-        mRenderWindow->Cube_render = true;
-        ui->Cube->setText("Stop rendering cube");
-    }
-    else {
-        mRenderWindow->Cube_render = false;
-        ui->Cube->setText("Render cube");
-    }
-}
+//void MainWindow::on_Cube_toggled(bool checked) {
+//    if (checked) {
+//        mRenderWindow->Cube_render = true;
+//        ui->Cube->setText("Stop rendering cube");
+//    }
+//    else {
+//        mRenderWindow->Cube_render = false;
+//        ui->Cube->setText("Render cube");
+//    }
+//}
 
 
 //File menu Exit closes the program

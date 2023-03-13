@@ -20,9 +20,13 @@ public:
     virtual void rotate(float l, float r, float u, float d);
     virtual void rotate(QVector3D point, float l, float r, float u, float d);
 
+    virtual void onOverlap(const QVector3D& hitPos);
+
     virtual QVector3D position() const {
         return QVector3D{mPosition.x(), mPosition.y(), mPosition.z()};
     }
+
+    QMatrix4x4 rotation() const;
 
 protected:
     std::vector<Vertex> mVertices;

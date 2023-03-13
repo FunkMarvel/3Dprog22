@@ -1,4 +1,5 @@
 #include "points.h"
+#include "spherecollider.h"
 #include <fstream>
 
 Points::Points()
@@ -62,6 +63,46 @@ void Points::init(GLint matrixUniform) {
     // mMatrixUniform = glGetUniformLocation( matrixUniform, "matrix" );
 
     glBindVertexArray(0);
+}
+
+void Points::onOverlap(const QVector3D &hitPos)
+{
+    size_t vertIdx = static_cast<size_t>(hitPos[0]);
+    if (mVertices.empty()) return;
+    if (vertIdx >= mVertices.size()) throw std::range_error("out of range points.cpp");
+
+    mVertices[vertIdx] = mVertices.back();
+    mVertices.pop_back();
+    bEmpty = mVertices.empty();
+    init(mMatrixUniform);
+}
+
+QVector4D Points::getClosestPoint(const QVector3D &pos) const
+{
+    size_t minIdx{};
+    QVector3D closestPoint{};
+    float minDist{std::numeric_limits<float>::max()};
+
+    size_t i{};
+    for (auto vertex : mVertices) {
+        QVector4D actualPos{vertex[0], vertex[1], vertex[2], 1};
+//        qDebug() << actualPos << " | ";
+
+        actualPos = mMatrix * actualPos;
+        QVector3D pointPos{actualPos.x(), actualPos.y(), actualPos.z()};
+        float newDist = (pointPos - pos).length();
+//        qDebug() << actualPos << "\n";
+
+        if (newDist < minDist) {
+            minDist = newDist;
+            closestPoint = pointPos;
+            minIdx = i;
+        }
+
+        i++;
+    }
+    qDebug() << closestPoint << "\n";
+    return QVector4D{closestPoint.x(), closestPoint.y(), closestPoint.z(), static_cast<float>(minIdx)};
 }
 
 void Points::draw() {

@@ -1,59 +1,73 @@
 #include "cube.h"
 
 Cube::Cube() {
-    // ABCD
-    mVertices.push_back(Vertex{0.5, 0.5, -0.5, 1, 1, 1});
-    mVertices.push_back(Vertex{0.5, -0.5, -0.5, 1, 1, 1});
-    mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 1, 1, 1});
 
-    mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 1, 1, 1});
-    mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 1, 1, 1});
-    mVertices.push_back(Vertex{0.5, 0.5, -0.5, 1, 1, 1});
+    //Furthest Back of building in Z
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0.7, 0.7});
+    mVertices.push_back(Vertex{10.0, -5.0, 10.0, 0, 0.7, 0.7});
+    mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0, 0.7, 0.7});
+     mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0.7, 0.7});
+     mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0,0.7, 0.7});
+     mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0.7, 0.7});
 
-    // CBFG
-    mVertices.push_back(Vertex{0.5, -0.5, -0.5, 0.5373, 0.0706, 0.0784});
-    mVertices.push_back(Vertex{0.5, 0.5, -0.5, 0.5373, 0.0706, 0.0784});
-    mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.5373, 0.0706, 0.0784});
+    //Left wall of the building
+    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, -5.0, 10.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0.6, 0.6});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0,0.6, 0.6});
+    //Floor if needed
+    mVertices.push_back(Vertex{10.0, -4.9, 10.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{-10.0, -4.9, -5.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{10.0, -4.9, -5.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{10.0, -4.9, 10.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{-10.0, -4.9, 10.0, 0, 0.5, 0.5});
+    mVertices.push_back(Vertex{-10.0, -4.9, -5.0, 0, 0.5, 0.5});
 
-    mVertices.push_back(Vertex{0.5, -0.5, -0.5, 0.5373, 0.0706, 0.0784});
-    mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.5373, 0.0706, 0.0784});
-    mVertices.push_back(Vertex{0.5, -0.5, 0.5, 0.5373, 0.0706, 0.0784});
+    //Right side of the house
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0.4, 0.4});
+    mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 0.4, 0.4});
+    mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0.4, 0.4});
+    mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 0.4, 0.4});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0.4,0.4});
+    mVertices.push_back(Vertex{10.0, -5.0, 10.0, 0, 0.4, 0.4});
 
-    // DCGH
-    mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 0.0510, 0.2824, 0.6745});
-    mVertices.push_back(Vertex{0.5, 0.5, -0.5, 0.0510, 0.2824, 0.6745});
-    mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.0510, 0.2824, 0.6745});
+        // Roof/top plane
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 0});
+    mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 0, 0});
+    mVertices.push_back(Vertex{10.0, 5.0, 10.0, 0, 0, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0,0, 0});
+    mVertices.push_back(Vertex{-10.0, 5.0, 10.0, 0, 0, 0});
 
-    mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 0.0510, 0.2824, 0.6745});
-    mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.0510, 0.2824, 0.6745});
-    mVertices.push_back(Vertex{-0.5, 0.5, 0.5, 0.0510, 0.2824, 0.6745});
+    //Left of door, front
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-10.0, -5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-1.2, -5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-10.0, 5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-1.2, 5.0, -5.0, 0, 0.3, 0.3});
+    mVertices.push_back(Vertex{-1.2, -5.0, -5.0, 0, 0.3, 0.3});
 
-    // DAHE
-    mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 1, 0.3333, 0.1451});
-    mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 1, 0.3333, 0.1451});
-    mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 1, 0.3333, 0.1451});
 
-    mVertices.push_back(Vertex{-0.5, 0.5, -0.5, 1, 0.3333, 0.1451});
-    mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 1, 0.3333, 0.1451});
-    mVertices.push_back(Vertex{-0.5, 0.5, 0.5, 1, 0.3333, 0.1451});
+    //Right of door , front
+   mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{10.0, -5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{10.0, 5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 0, 0.3, 0.3});
+   mVertices.push_back(Vertex{1.2, -5.0, -5.0, 0, 0.3, 0.3});
 
-    // ABFE
-    mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 0.0980, 0.6078, 0.2980});
-    mVertices.push_back(Vertex{0.5, -0.5, -0.5, 0.0980, 0.6078, 0.2980});
-    mVertices.push_back(Vertex{0.5, -0.5, 0.5, 0.0980, 0.6078, 0.2980});
 
-    mVertices.push_back(Vertex{-0.5, -0.5, -0.5, 0.0980, 0.6078, 0.2980});
-    mVertices.push_back(Vertex{0.5, -0.5, 0.5, 0.0980, 0.6078, 0.2980});
-    mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 0.0980, 0.6078, 0.2980});
+   //Above door , front
+   mVertices.push_back(Vertex{-1.2, 5.0, -5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{-1.2, 0.1, -5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{1.2, 0.1,-5.0, 0, 0.2, 0.2});
+   mVertices.push_back(Vertex{1.2, 5.0, -5.0, 0, 0.2, 0.2});
 
-    // EFGH
-    mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 0.9961, 0.8353, 0.1843});
-    mVertices.push_back(Vertex{0.5, -0.5, 0.5, 0.9961, 0.8353, 0.1843});
-    mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.9961, 0.8353, 0.1843});
 
-    mVertices.push_back(Vertex{-0.5, -0.5, 0.5, 0.9961, 0.8353, 0.1843});
-    mVertices.push_back(Vertex{0.5, 0.5, 0.5, 0.9961, 0.8353, 0.1843});
-    mVertices.push_back(Vertex{-0.5, 0.5, 0.5, 0.9961, 0.8353, 0.1843});
 
     mMatrix.setToIdentity();
 }
@@ -97,3 +111,12 @@ void Cube::draw() {
 void Cube::rotate(QMatrix4x4 matrix) {
     mMatrix = matrix;
 }
+
+bool Cube::ContainsPoint(QVector3D Point)
+{
+   return (Point.x() <= 10 && Point.x() >= -10 &&
+    Point.y() <= 10 && Point.y() >= -0 &&
+    Point.z() <= 30 && Point.z() >= 15);
+}
+
+

@@ -87,6 +87,8 @@ private:
     ///Starts QOpenGLDebugLogger if possible
     void startOpenGLDebugger();
 
+    QVector3D cameraLastPos;
+
 protected:
     //The QWindow that we inherit from have these functions to capture
     // - mouse and keyboard.
@@ -102,6 +104,8 @@ protected:
     void MoveByInput(class VisualObject*);
     void RotateByInput(class VisualObject*);
     void InitMoveKeys();
+    void ChangeCamera();
+
 };
 
 #endif // RENDERWINDOW_H

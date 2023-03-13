@@ -11,6 +11,8 @@ public:
 
     void init(GLint shader) override;
     void draw() override;
+
+    QVector3D getPoint(float t);
 };
 
 #endif // CURVE_H

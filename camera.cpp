@@ -11,6 +11,10 @@ void Camera::init(GLint pMatrixUniform, GLint vMatrixUniform) {
     _mVMatrix.setToIdentity();
     _mRotation.setToIdentity();
 
+    _mEye.setX(0);
+    _mEye.setY(0);
+    _mEye.setZ(0);
+
     _mPMatrixUniform = pMatrixUniform;
     _mVMatrixUniform = vMatrixUniform;
 }
@@ -40,6 +44,11 @@ void Camera::translate(float dx, float dy, float dz) {
     _mEye += QVector3D{moveVec.x(), moveVec.y(), moveVec.z()};
 }
 
+void Camera::translate(QVector3D posDelta)
+{
+    translate(posDelta.x(), posDelta.y(), posDelta.z());
+}
+
 void Camera::rotate(const QVector4D& rotation, const QVector3D& point)
 {
     QMatrix4x4 transMat{};
@@ -53,6 +62,25 @@ void Camera::rotate(const QVector4D& rotation, const QVector3D& point)
     transMat.rotate(rotation.x(), rotation.y(), rotation.z(), rotation.w());
     _mRotation.rotate(rotation.x(), rotation.y(), rotation.z(), rotation.w());
     camPos = transMat * camPos;
+
+    transMat.setToIdentity();
+    transMat.translate(point.x(), point.y(), point.z());
+    camPos = transMat * camPos;
+
+    _mEye = QVector3D{camPos.x(), camPos.y(), camPos.z()};
+}
+
+void Camera::rotate(const QMatrix4x4 &rotation, const QVector3D &point)
+{
+    QMatrix4x4 transMat{};
+    QVector4D camPos{_mEye.x(), _mEye.y(), _mEye.z(), 1.f};
+
+    transMat.setToIdentity();
+    transMat.translate(-point.x(), -point.y(), -point.z());
+    camPos = transMat * camPos;
+
+    _mRotation = rotation;
+    camPos = _mRotation * camPos;
 
     transMat.setToIdentity();
     transMat.translate(point.x(), point.y(), point.z());

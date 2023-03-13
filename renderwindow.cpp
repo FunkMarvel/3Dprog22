@@ -13,6 +13,8 @@
 #include <cmath>
 
 #include "disc.h"
+#include "npc.h"
+#include "octahedronball.h"
 #include "visualobject.h"
 #include "xyz.h"
 #include "shader.h"
@@ -23,6 +25,8 @@
 #include "curve.h"
 #include "points.h"
 #include "pawn.h"
+#include "cube.h"
+#include "door.h"
 
 
 RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
@@ -51,13 +55,21 @@ RenderWindow::RenderWindow(const QSurfaceFormat& format, MainWindow* mainWindow)
 
 
     mObjects["XYZ"] = new XYZ{};
-    mObjects["Curve"] = new Curve{"C:\\Users\\aande\\OneDrive\\Bilder\\Dokumenter\\Matematikk 3\\Oblig 2\\cubic.dat"};
-    mObjects["Scatter"] = new Points{"C:\\Users\\aande\\OneDrive\\Bilder\\Dokumenter\\Matematikk 3\\Oblig 2\\points2.dat", 10};
+//    mObjects["Curve"] = new Curve{"../3Dprog22/datafiles/cubic.dat"};
+    mObjects["Scatter"] = new Points{"../3Dprog22/datafiles/points.dat", 10};
+    mObjects["Disc"] = new Disc{1};
+    mObjects["Surface"] = new TriangleSurface{"../3Dprog22/datafiles/vertices.dat"};
 
-    mObjects["Surface"] = new TriangleSurface{"../vertices.dat"};
+    mObjects["Octahedronball"] = new OctahedronBall{};
+
 
     mObjects["Pawn"] = new Pawn{};
-    mObjects["Disc"] = new Disc{true};
+    mObjects["NPC"] = new NPC{};
+
+//    mObjects["Disc"] = new Disc{true};
+
+    mObjects["Door"] = new Door{};
+    mObjects["Cube"] = new Cube{};
 }
 
 RenderWindow::~RenderWindow() {
@@ -144,9 +156,26 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     _pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
     for (const auto& object : mObjects) {
         object.second->init(mMmatrixUniform);
-        if (object.first == "Pawn") continue;
+        if (object.first == "Pawn" || object.first == "Scatter") continue;
         object.second->move(0.f, -_pawn->getRadius(), 0.f);
     }
+
+    auto npc = reinterpret_cast<NPC*>(mObjects["NPC"]);
+
+    Curve* path = new Curve{"../3Dprog22/datafiles/cubic.dat"};
+
+    path->rotate(90, 0, 1, 0);
+    path->move(10, 0, 2);
+
+    npc->addPath("cubic", path);
+
+    path = new Curve{"../3Dprog22/datafiles/bestFit.dat"};
+
+    path->move(10, 0, 2);
+    path->rotate(-45, 0, 1, 0);
+
+    npc->addPath("bestFit", path);
+
 
 //    mObjects["XYZ"]->move(-8, -7, 0);
     glBindVertexArray(0); //unbinds any VertexArray - good practice
@@ -154,6 +183,11 @@ for (auto it=mObjects.begin();it!= mObjects.end(); it++)
     mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
     mCamera.translate(0, 10, -10);
     mCamera.lookAt(QVector3D{0, 0, 0}, QVector3D{0, 1, 0});
+
+    mObjects["Cube"]->move(0,5,20);
+    mObjects["Door"]->move(0,5,20);
+    mObjects["Octahedronball"]->move(7,1,26);
+    mObjects["Disc"]->move(0,5,29.8);
 }
 
 // Called each frame - doing the rendering!!!
@@ -178,12 +212,41 @@ void RenderWindow::render() {
     MoveByInput(_pawn);
     RotateByInput(_pawn);
 
+//    if(!Cube::ContainsPoint(_pawn->position())){
+//        RotateByInput(_pawn);
+//    }
+
+    if(Cube::ContainsPoint(_pawn->position()) && !Cube::ContainsPoint(_pawn->getLastPos())){
+        qDebug() << "Enter house";
+        ChangeCamera();
+    }
+    if(!Cube::ContainsPoint(_pawn->position()) && Cube::ContainsPoint(_pawn->getLastPos()))
+    {
+        qDebug() << "Exit house";
+        mCamera.init(mPmatrixUniform, mVmatrixUniform);
+        mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
+        mCamera.setPosition(_pawn->position() + QVector3D{0,10,-10});
+
+        mCamera.rotate(_pawn->rotation(), _pawn->position());
+
+        mCamera.lookAt(_pawn->position(), QVector3D{0, 1, 0});
+    } else if (Cube::ContainsPoint(_pawn->position())) {
+        ChangeCamera();
+    }
+
     //Moveing camera
     mCamera.update();
 
+
+    _pawn->collisionChecker(mObjects);
+    qDebug() << "player: " << _pawn->position() << " | " << mCamera.eyePos() << "\n";
+
+    dt += 1.0f / mRenderTimer->interval();
+    mObjects["NPC"]->move(0.5f * std::sin(dt/(M_2_PI * 10)) + 0.5f);
     for (const auto& obj : mObjects) {
         obj.second->draw();
     }
+    mMainWindow->updateScore(_pawn->score);
 
     //Calculate framerate before
     // checkForGLerrors() because that call takes a long time
@@ -206,6 +269,7 @@ void RenderWindow::render() {
     //        mVmatrix->rotate(2.f, 0.f, 1.0, 0.f);
 
     //    }
+
 }
 
 //This function is called from Qt when window is exposed (shown)
@@ -320,15 +384,25 @@ void RenderWindow::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Escape) {
         mMainWindow->close(); //Shuts down the whole program
     }
-    else if (Plane_render && event->key() == Qt::Key_1) {
+    else if (event->key() == Qt::Key_1) {
+        auto npc = reinterpret_cast<NPC*>(mObjects["NPC"]);
+        npc->switchToNextPath();
+    }
+    else if (event->key() == Qt::Key_2) {
+        auto npc = reinterpret_cast<NPC*>(mObjects["NPC"]);
         drawNormals = !drawNormals;
-
-        auto trSurf = reinterpret_cast<TriangleSurface*>(mObjects["Surface"]);
-        trSurf->drawUnitNormals(drawNormals);
+        npc->drawPath(drawNormals);
     }
     else if (event->key() == Qt::Key_Space && mObjects.find("Pawn") != mObjects.end()) {
         Pawn* pawn = reinterpret_cast<Pawn*>(mObjects["Pawn"]);
         pawn->velocity = QVector3D{0.f, std::sqrt(2.f*pawn->jumpHeight*_gravity), 0.f};
+    }
+    else if(event->key() == Qt::Key_F && _pawn->InRangeForDoor){
+        auto door = reinterpret_cast<Door*>(mObjects["Door"]);
+       if(!door->DoorIsOpen)
+        door->DoorIsOpen = true;
+       else
+        door->DoorIsOpen = false;
     }
 }
 
@@ -378,10 +452,11 @@ void RenderWindow::MoveByInput(VisualObject* obj) {
 
     _movVec.normalize();
     _movVec /= mRenderTimer->interval();
-    obj->move(_movVec.x(), _movVec.y(), _movVec.z());
-
-    mCamera.translate(_movVec.x(), _movVec.y(), _movVec.z());
+    _movVec *= _pawn->speed;
+    _pawn->move(_movVec.x(), _movVec.y(), _movVec.z());
+    mCamera.translate(_movVec);
     mCamera.lookAt(_pawn->position(), QVector3D{0,1,0});
+
 }
 
 void RenderWindow::RotateByInput(VisualObject* obj) {
@@ -416,12 +491,12 @@ void RenderWindow::RotateByInput(VisualObject* obj) {
 
         case Qt::Key_Q:
             bRotating = true;
-            rotVec -= yrot;
+            rotVec += yrot;
             break;
 
         case Qt::Key_E:
             bRotating = true;
-            rotVec += yrot;
+            rotVec -= yrot;
             break;
 
         default:
@@ -432,8 +507,8 @@ void RenderWindow::RotateByInput(VisualObject* obj) {
     rotVec.normalize();
 
     if (bRotating) {
-        obj->rotate(1.f, rotVec.x(), rotVec.y(), rotVec.z());
-        mCamera.rotate(QVector4D{1.f, rotVec.x(), rotVec.y(), rotVec.z()}, _pawn->position());
+        obj->rotate(_pawn->turningSpeed, rotVec.x(), rotVec.y(), rotVec.z());
+        mCamera.rotate(QVector4D{_pawn->turningSpeed, rotVec.x(), rotVec.y(), rotVec.z()}, _pawn->position());
         mCamera.lookAt(_pawn->position(), yrot);
     }
 }
@@ -455,3 +530,17 @@ void RenderWindow::InitMoveKeys() {
     pressedKeys[Qt::Key_D] = false;
     pressedKeys[Qt::Key_A] = false;
 }
+
+void RenderWindow::ChangeCamera()
+{
+
+
+
+    mCamera.init(mPmatrixUniform, mVmatrixUniform);
+    mCamera.perspective(80, 16.0 / 9.0, 0.1, 50.0);
+    mCamera.setPosition(QVector3D(-7,8.f,25));
+    mCamera.lookAt(_pawn->position(), QVector3D{0, 1, 0});
+}
+
+
+
